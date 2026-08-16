@@ -1,0 +1,46 @@
+{
+	"schemaVersion": 1,
+	"id": "logpose-wither-fruits",
+	"version": "${version}",
+	"name": "LogPose: Wither Fruits",
+	"description": "Wither Fruits mod",
+	"authors": [
+		"gaziz"
+	],
+	"contact": {
+		"sources": "https://github.com/GazizVR/logpose-wither-fruits"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/logpose-wither-fruits/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{
+				"value": "me.gaziz.logpose.witherfruits.Initializer",
+				"adapter": "kotlin"
+			}
+		],
+		"client": [
+			{
+				"value": "me.gaziz.logpose.witherfruits.client.Initializer",
+				"adapter": "kotlin"
+			}
+		],
+		"fabric-datagen": [
+			{
+				"value": "me.gaziz.logpose.witherfruits.datagen.DataGenerator",
+				"adapter": "kotlin"
+			}
+		]
+	},
+	"mixins": [
+		"logpose.witherfruits.client.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*"
+	}
+}
