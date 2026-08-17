@@ -44,7 +44,7 @@ object ModItems {
                     FoodComponent.StatusEffectEntry(
                         StatusEffectInstance(
                             StatusEffects.NAUSEA,
-                            300,
+                            360,
                             255
                         ),
                         1f
