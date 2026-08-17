@@ -43,11 +43,9 @@ object ModItems {
         )
         ItemGroupEvents
             .modifyEntriesEvent(itemGroupKey)
-            .register { itemGroup ->
-                itemGroup.add { item }
-            }
+            .register { it.add { item } }
     }
-    private val rubberFruitSettings = Item
+    private val witherFruitSettings = Item
         .Settings()
         .maxCount(1)
         .food(
@@ -69,7 +67,7 @@ object ModItems {
                 )
             )
         )
-    val rubberFruitItem = object : Item(rubberFruitSettings) {
+    val rubberFruitItem = object : Item(witherFruitSettings) {
         override fun appendTooltip(
             stack: ItemStack,
             context: TooltipContext,
@@ -80,11 +78,10 @@ object ModItems {
         }
     }
     val rubberFruitId = Initializer.id("rubber_fruit")
-    val rubberFruit = register(
-        rubberFruitId,
-        rubberFruitItem
-    )
+    val fireFruitId = Initializer.id("fire_fruit")
+    val fireFruitItem = Item(witherFruitSettings)
     fun initialize() {
-        rubberFruit
+        register(rubberFruitId, rubberFruitItem)
+        register(fireFruitId, fireFruitItem)
     }
 }
