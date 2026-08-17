@@ -7,14 +7,17 @@ import net.minecraft.client.util.InputUtil
 
 object ZoomManager {
     private const val MIN_FOV = 5
-    private var isZoomed = false
     private var defaultFov = 70
+    var isZoomed = false
+        private set
+    private var forceZoom = false
     var zoomedFov = 30
-    set(value) {
-        if(value >= MIN_FOV){
-            field = value
+        set(value) {
+            if(value >= MIN_FOV){
+                forceZoom = true
+                field = value
+            }
         }
-    }
     fun initialize() {
         val keyBind = KeyBindingHelper.registerKeyBinding(
             KeyBinding(
@@ -30,8 +33,9 @@ object ZoomManager {
                     defaultFov = client.options.fov.value
                 }
                 if(keyBind.isPressed) {
-                    if(!isZoomed) {
+                    if(!isZoomed || forceZoom) {
                         isZoomed = true
+                        forceZoom = true
                         client.options.fov.value = zoomedFov
                     }
                 } else {

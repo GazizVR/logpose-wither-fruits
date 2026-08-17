@@ -2,6 +2,9 @@
   "required": true,
   "package": "me.gaziz.logpose.witherfruits.client.mixin",
   "compatibilityLevel": "JAVA_21",
-  "client": [ "ValidatingIntSlider" ],
+  "client": [
+    "ValidatingIntSlider",
+    "MouseScroll"
+  ],
   "injectors": { "defaultRequire": 1 }
 }
