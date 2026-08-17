@@ -22,5 +22,9 @@ class EnglishLangProvider(
             ModItems.rubberFruitId.toTranslationKey("item"),
             "Rubber Fruit"
         )
+        translationBuilder.add(
+            ModItems.ITEM_GROUP_KEY,
+            "LogPose: Wither Fruits"
+        )
     }
 }
