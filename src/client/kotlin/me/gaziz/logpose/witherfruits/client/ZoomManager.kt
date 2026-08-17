@@ -13,7 +13,7 @@ object ZoomManager {
     private var forceZoom = false
     var zoomedFov = 30
         set(value) {
-            if(value >= MIN_FOV){
+            if(value in MIN_FOV..defaultFov) {
                 forceZoom = true
                 field = value
             }
