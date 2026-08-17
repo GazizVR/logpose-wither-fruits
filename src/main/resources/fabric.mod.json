@@ -33,9 +33,6 @@
 			}
 		]
 	},
-	"mixins": [
-		"logpose.witherfruits.client.mixins.json"
-	],
 	"depends": {
 		"fabricloader": ">=0.19.3",
 		"minecraft": "~1.21.1",
