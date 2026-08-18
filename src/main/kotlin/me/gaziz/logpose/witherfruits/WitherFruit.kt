@@ -1,6 +1,9 @@
 package me.gaziz.logpose.witherfruits
 
+import me.gaziz.logpose.witherfruits.UserManager.fruit
+import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.FoodComponent
+import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.Item
@@ -8,7 +11,9 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.tooltip.TooltipType
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
-import java.util.Optional
+import net.minecraft.util.Rarity
+import net.minecraft.world.World
+import java.util.*
 
 class WitherFruit(
     fruitPath: String,
@@ -16,6 +21,7 @@ class WitherFruit(
 ): Item(
     Settings()
         .maxCount(1)
+        .rarity(Rarity.EPIC)
         .food(
             FoodComponent(
                 6,
@@ -46,5 +52,21 @@ class WitherFruit(
         if(tooltipCnt != null) {
             tooltip.add(tooltipCnt)
         }
+    }
+    override fun finishUsing(
+        stack: ItemStack,
+        world: World,
+        user: LivingEntity
+    ): ItemStack {
+        if(!world.isClient) {
+            if(fruit != null) {
+                user.kill()
+                UserManager.setFruit(null)
+            } else {
+                UserManager.setFruit(this)
+            }
+        }
+        val foodComponent = stack.get<FoodComponent?>(DataComponentTypes.FOOD)
+        return if (foodComponent != null) user.eatFood(world, stack, foodComponent) else stack
     }
 }
