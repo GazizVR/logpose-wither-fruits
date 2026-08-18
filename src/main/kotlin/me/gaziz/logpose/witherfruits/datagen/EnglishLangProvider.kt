@@ -19,11 +19,11 @@ class EnglishLangProvider(
         translationBuilder: TranslationBuilder
     ) {
         translationBuilder.add(
-            ModItems.rubberFruitId.toTranslationKey("item"),
+            ModItems.rubberFruit.id.toTranslationKey("item"),
             "Rubber Fruit"
         )
         translationBuilder.add(
-            ModItems.fireFruitId.toTranslationKey("item"),
+            ModItems.fireFruit.id.toTranslationKey("item"),
             "Fire Fruit"
         )
         translationBuilder.add(

@@ -17,7 +17,7 @@ class ModelProvider(
     override fun generateItemModels(
         itemModelGenerator: ItemModelGenerator
     ) {
-        itemModelGenerator.register(ModItems.rubberFruitItem, Models.GENERATED)
-        itemModelGenerator.register(ModItems.fireFruitItem, Models.GENERATED)
+        itemModelGenerator.register(ModItems.rubberFruit, Models.GENERATED)
+        itemModelGenerator.register(ModItems.fireFruit, Models.GENERATED)
     }
 }

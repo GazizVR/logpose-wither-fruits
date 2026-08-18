@@ -2,12 +2,8 @@ package me.gaziz.logpose.witherfruits
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.component.type.FoodComponent
-import net.minecraft.entity.effect.StatusEffectInstance
-import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.item.tooltip.TooltipType
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
@@ -15,7 +11,6 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
-import java.util.Optional
 
 object ModItems {
     const val ITEM_GROUP_KEY = "itemgroup.${Initializer.MOD_ID}.wither_fruits"
@@ -24,7 +19,7 @@ object ModItems {
         Initializer.id(ITEM_GROUP_KEY)
     )
     private val itemGroup = FabricItemGroup.builder()
-        .icon { ItemStack(rubberFruitItem) }
+        .icon { ItemStack(rubberFruit) }
         .displayName(Text.translatable(ITEM_GROUP_KEY))
         .build()
     private fun register(
@@ -36,52 +31,24 @@ object ModItems {
             itemId,
             item
         )
+        ItemGroupEvents
+            .modifyEntriesEvent(itemGroupKey)
+            .register { it.add { item } }
+    }
+    val rubberFruit = WitherFruit(
+        "rubber_fruit",
+        Text
+            .literal("GOD OF SUN POWER")
+            .formatted(Formatting.YELLOW)
+    )
+    val fireFruit = WitherFruit("fire_fruit")
+    fun initialize() {
         Registry.register(
             Registries.ITEM_GROUP,
             itemGroupKey,
             itemGroup
         )
-        ItemGroupEvents
-            .modifyEntriesEvent(itemGroupKey)
-            .register { it.add { item } }
-    }
-    private val witherFruitSettings = Item
-        .Settings()
-        .maxCount(1)
-        .food(
-            FoodComponent(
-                6,
-                14.4f,
-                true,
-                1.6f,
-                Optional.empty(),
-                listOf(
-                    FoodComponent.StatusEffectEntry(
-                        StatusEffectInstance(
-                            StatusEffects.NAUSEA,
-                            360,
-                            255
-                        ),
-                        1f
-                    )
-                )
-            )
-        )
-    val rubberFruitItem = object : Item(witherFruitSettings) {
-        override fun appendTooltip(
-            stack: ItemStack,
-            context: TooltipContext,
-            tooltip: MutableList<Text>,
-            type: TooltipType?
-        ) {
-            tooltip.add(Text.literal("GOD OF SUN POWER").formatted(Formatting.GOLD))
-        }
-    }
-    val rubberFruitId = Initializer.id("rubber_fruit")
-    val fireFruitId = Initializer.id("fire_fruit")
-    val fireFruitItem = Item(witherFruitSettings)
-    fun initialize() {
-        register(rubberFruitId, rubberFruitItem)
-        register(fireFruitId, fireFruitItem)
+        register(rubberFruit.id, rubberFruit)
+        register(fireFruit.id, fireFruit)
     }
 }
