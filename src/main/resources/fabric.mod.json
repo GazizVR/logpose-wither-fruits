@@ -4,9 +4,7 @@
 	"version": "${version}",
 	"name": "LogPose: Wither Fruits",
 	"description": "Wither Fruits mod",
-	"authors": [
-		"gaziz"
-	],
+	"authors": [ "gaziz" ],
 	"contact": {
 		"sources": "https://github.com/GazizVR/logpose-wither-fruits"
 	},
@@ -33,6 +31,9 @@
 			}
 		]
 	},
+	"mixins": [
+		"logpose-wither-fruits.mixin.json"
+	],
 	"depends": {
 		"fabricloader": ">=0.19.3",
 		"minecraft": "~1.21.1",

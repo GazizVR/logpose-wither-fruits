@@ -1,6 +1,6 @@
 package me.gaziz.logpose.witherfruits
 
-import me.gaziz.logpose.witherfruits.UserManager.fruit
+import me.gaziz.logpose.witherfruits.UsersManager.fruits
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.FoodComponent
 import net.minecraft.entity.LivingEntity
@@ -59,11 +59,13 @@ class WitherFruit(
         user: LivingEntity
     ): ItemStack {
         if(!world.isClient) {
+            val uuid = user.uuidAsString
+            val fruit = fruits[uuid]
             if(fruit != null) {
                 user.kill()
-                UserManager.setFruit(null)
+                UsersManager.removeFruit(uuid)
             } else {
-                UserManager.setFruit(this)
+                UsersManager.setFruit(uuid,this)
             }
         }
         val foodComponent = stack.get<FoodComponent?>(DataComponentTypes.FOOD)
