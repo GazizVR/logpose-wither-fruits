@@ -21,7 +21,7 @@ object UsersManager {
         effectEntry,
         StatusEffectInstance.INFINITE,
         StatusEffectInstance.MAX_AMPLIFIER,
-        true,
+        false,
         false,
         false
     )

@@ -64,7 +64,17 @@ class WitherFruit(
             val fruit = fruits[uuid]
             if(fruit != null) {
                 stack.decrement(1)
-                user.kill()
+                user.health = 0.1f
+                val statusEffect = StatusEffectInstance(
+                    StatusEffects.WITHER,
+                    StatusEffectInstance.INFINITE,
+                    StatusEffectInstance.MAX_AMPLIFIER,
+                    false,
+                    false,
+                    false
+                )
+                user.removeStatusEffect(StatusEffects.NAUSEA)
+                user.addStatusEffect(statusEffect)
                 UsersManager.removeFruit(uuid)
             } else {
                 UsersManager.setFruit(uuid,this)
