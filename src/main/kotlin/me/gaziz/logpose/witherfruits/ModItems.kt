@@ -34,9 +34,23 @@ object ModItems {
             .modifyEntriesEvent(itemGroupKey)
             .register { it.add { item } }
     }
-    val rubberFruit = WitherFruit("rubber_fruit")
-    val fireFruit = WitherFruit("fire_fruit")
-    val catLeopardFruit = WitherFruit("cat_leopard_fruit")
+
+    val tooltipParamecia: String = Initializer.id("type_paramecia").toTranslationKey("tooltip")
+    val tooltipZoan: String = Initializer.id("type_zoan").toTranslationKey("tooltip")
+    val tooltipLogia: String = Initializer.id("type_logia").toTranslationKey("tooltip")
+
+    val rubberFruit = WitherFruit(
+        "rubber_fruit",
+        Text.translatable(tooltipParamecia)
+    )
+    val catLeopardFruit = WitherFruit(
+        "cat_leopard_fruit",
+        Text.translatable(tooltipZoan)
+    )
+    val fireFruit = WitherFruit(
+        "fire_fruit",
+        Text.translatable(tooltipLogia)
+    )
     fun initialize() {
         Registry.register(
             Registries.ITEM_GROUP,

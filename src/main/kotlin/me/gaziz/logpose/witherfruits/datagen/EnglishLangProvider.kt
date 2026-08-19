@@ -30,6 +30,20 @@ class EnglishLangProvider(
             ModItems.fireFruit.id.toTranslationKey("item"),
             "Flame-Flame Fruit"
         )
+
+        translationBuilder.add(
+            ModItems.tooltipParamecia,
+            "Type: Paramecia"
+        )
+        translationBuilder.add(
+            ModItems.tooltipZoan,
+            "Type: Zoan"
+        )
+        translationBuilder.add(
+            ModItems.tooltipLogia,
+            "Type: Logia"
+        )
+
         translationBuilder.add(
             ModItems.ITEM_GROUP_KEY,
             "LogPose: Wither Fruits"
