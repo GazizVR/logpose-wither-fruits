@@ -8,17 +8,12 @@ import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.item.tooltip.TooltipType
-import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import net.minecraft.world.World
 import java.util.*
 
-class WitherFruit(
-    fruitPath: String,
-    private val tooltipCnt: Text? = null
-): Item(
+class WitherFruit(fruitPath: String): Item(
     Settings()
         .maxCount(1)
         .rarity(Rarity.EPIC)
@@ -43,16 +38,6 @@ class WitherFruit(
         )
 ) {
     val id: Identifier = Initializer.id(fruitPath)
-    override fun appendTooltip(
-        stack: ItemStack,
-        context: TooltipContext,
-        tooltip: MutableList<Text>,
-        type: TooltipType
-    ) {
-        if(tooltipCnt != null) {
-            tooltip.add(tooltipCnt)
-        }
-    }
 
     override fun finishUsing(
         stack: ItemStack,

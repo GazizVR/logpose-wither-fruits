@@ -23,20 +23,32 @@ object UsersManager {
         StatusEffectInstance.MAX_AMPLIFIER,
         false,
         false,
-        false
+        false,
+
     )
-    private var isEffectSet = false
+    private val secondEffect = StatusEffects.BLINDNESS
+    private val secondStatusEffect = StatusEffectInstance(
+        secondEffect,
+        StatusEffectInstance.INFINITE,
+        1,
+        false,
+        false,
+        false,
+    )
+    private var hasNegativeEffects = false
     fun initLoop(){
         ServerTickEvents.END_SERVER_TICK.register { server ->
             server.playerManager.playerList.forEach { player ->
                 if(fruits.containsKey(player.uuidAsString)) {
                     if(player.isTouchingWater) {
-                        isEffectSet = true
+                        hasNegativeEffects = true
                         player.addStatusEffect(statusEffect)
+                        player.addStatusEffect(secondStatusEffect)
                     } else {
-                        if(isEffectSet) {
-                            isEffectSet = false
+                        if(hasNegativeEffects) {
+                            hasNegativeEffects = false
                             player.removeStatusEffect(effectEntry)
+                            player.removeStatusEffect(secondEffect)
                         }
                     }
                 }

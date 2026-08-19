@@ -9,7 +9,6 @@ import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.text.Text
-import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 
 object ModItems {
@@ -35,12 +34,7 @@ object ModItems {
             .modifyEntriesEvent(itemGroupKey)
             .register { it.add { item } }
     }
-    val rubberFruit = WitherFruit(
-        "rubber_fruit",
-        Text
-            .literal("GOD OF SUN POWER")
-            .formatted(Formatting.YELLOW)
-    )
+    val rubberFruit = WitherFruit("rubber_fruit")
     val fireFruit = WitherFruit("fire_fruit")
     fun initialize() {
         Registry.register(
