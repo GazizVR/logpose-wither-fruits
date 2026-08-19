@@ -18,6 +18,7 @@ class ModelProvider(
         itemModelGenerator: ItemModelGenerator
     ) {
         itemModelGenerator.register(ModItems.rubberFruit, Models.GENERATED)
+        itemModelGenerator.register(ModItems.catLeopardFruit, Models.GENERATED)
         itemModelGenerator.register(ModItems.fireFruit, Models.GENERATED)
     }
 }

@@ -23,6 +23,10 @@ class EnglishLangProvider(
             "Gum-Gum Fruit"
         )
         translationBuilder.add(
+            ModItems.catLeopardFruit.id.toTranslationKey("item"),
+            "Cat-Cat, Leopard Fruit"
+        )
+        translationBuilder.add(
             ModItems.fireFruit.id.toTranslationKey("item"),
             "Flame-Flame Fruit"
         )

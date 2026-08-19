@@ -36,6 +36,7 @@ object ModItems {
     }
     val rubberFruit = WitherFruit("rubber_fruit")
     val fireFruit = WitherFruit("fire_fruit")
+    val catLeopardFruit = WitherFruit("cat_leopard_fruit")
     fun initialize() {
         Registry.register(
             Registries.ITEM_GROUP,
@@ -43,6 +44,7 @@ object ModItems {
             itemGroup
         )
         register(rubberFruit.id, rubberFruit)
+        register(catLeopardFruit.id, catLeopardFruit)
         register(fireFruit.id, fireFruit)
     }
 }
