@@ -1,5 +1,0 @@
-{
-    "required": true,
-    "package": "me.gaziz.logpose.witherfruits.mixin",
-    "server": [ "ServerPlayerEntity" ]
-}
