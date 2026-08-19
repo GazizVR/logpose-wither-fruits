@@ -1,5 +1,7 @@
-package me.gaziz.logpose.witherfruits
+package me.gaziz.logpose.witherfruits.item
 
+import me.gaziz.logpose.witherfruits.Initializer
+import me.gaziz.logpose.witherfruits.UsersManager
 import me.gaziz.logpose.witherfruits.UsersManager.fruits
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.FoodComponent
@@ -11,17 +13,16 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.tooltip.TooltipType
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
-import net.minecraft.util.Rarity
 import net.minecraft.world.World
 import java.util.*
 
 class WitherFruit(
+    private val fruitType: WitherFruitType,
     path: String,
-    private val tooltipText: Text? = null
 ): Item(
     Settings()
         .maxCount(1)
-        .rarity(Rarity.EPIC)
+        .rarity(fruitType.rarity)
         .food(
             FoodComponent(
                 6,
@@ -50,9 +51,9 @@ class WitherFruit(
         tooltip: MutableList<Text>,
         type: TooltipType
     ) {
-        if(tooltipText != null) {
-            tooltip.add(tooltipText)
-        }
+        tooltip.add(
+            Text.translatable(fruitType.tooltipId)
+        )
     }
 
     override fun finishUsing(

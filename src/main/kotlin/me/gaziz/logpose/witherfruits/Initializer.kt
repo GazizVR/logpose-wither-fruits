@@ -1,5 +1,6 @@
 package me.gaziz.logpose.witherfruits
 
+import me.gaziz.logpose.witherfruits.item.ModItems
 import net.fabricmc.api.ModInitializer
 import net.minecraft.util.Identifier
 

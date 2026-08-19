@@ -1,11 +1,12 @@
 package me.gaziz.logpose.witherfruits
 
+import me.gaziz.logpose.witherfruits.item.WitherFruit
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 
 object UsersManager {
-    var fruits: Map<String,WitherFruit> = emptyMap()
+    var fruits: Map<String, WitherFruit> = emptyMap()
     private set
     fun setFruit(
         uuid: String,

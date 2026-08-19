@@ -1,6 +1,6 @@
 package me.gaziz.logpose.witherfruits.datagen
 
-import me.gaziz.logpose.witherfruits.ModItems
+import me.gaziz.logpose.witherfruits.item.ModItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.data.client.BlockStateModelGenerator

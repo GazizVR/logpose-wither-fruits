@@ -1,6 +1,7 @@
 package me.gaziz.logpose.witherfruits.datagen
 
-import me.gaziz.logpose.witherfruits.ModItems
+import me.gaziz.logpose.witherfruits.item.ModItems
+import me.gaziz.logpose.witherfruits.item.WitherFruitType
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.minecraft.registry.RegistryWrapper
@@ -19,6 +20,24 @@ class EnglishLangProvider(
         translationBuilder: TranslationBuilder
     ) {
         translationBuilder.add(
+            ModItems.ITEM_GROUP_KEY,
+            "LogPose: Wither Fruits"
+        )
+
+        translationBuilder.add(
+            WitherFruitType.Paramecia.tooltipId,
+            "Type: Paramecia"
+        )
+        translationBuilder.add(
+            WitherFruitType.Zoan.tooltipId,
+            "Type: Zoan"
+        )
+        translationBuilder.add(
+            WitherFruitType.Logia.tooltipId,
+            "Type: Logia"
+        )
+
+        translationBuilder.add(
             ModItems.rubberFruit.id.toTranslationKey("item"),
             "Gum-Gum Fruit"
         )
@@ -31,22 +50,5 @@ class EnglishLangProvider(
             "Flame-Flame Fruit"
         )
 
-        translationBuilder.add(
-            ModItems.tooltipParamecia,
-            "Type: Paramecia"
-        )
-        translationBuilder.add(
-            ModItems.tooltipZoan,
-            "Type: Zoan"
-        )
-        translationBuilder.add(
-            ModItems.tooltipLogia,
-            "Type: Logia"
-        )
-
-        translationBuilder.add(
-            ModItems.ITEM_GROUP_KEY,
-            "LogPose: Wither Fruits"
-        )
     }
 }

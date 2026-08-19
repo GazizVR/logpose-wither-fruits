@@ -1,5 +1,6 @@
-package me.gaziz.logpose.witherfruits
+package me.gaziz.logpose.witherfruits.item
 
+import me.gaziz.logpose.witherfruits.Initializer
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.item.Item
@@ -35,21 +36,17 @@ object ModItems {
             .register { it.add { item } }
     }
 
-    val tooltipParamecia: String = Initializer.id("type_paramecia").toTranslationKey("tooltip")
-    val tooltipZoan: String = Initializer.id("type_zoan").toTranslationKey("tooltip")
-    val tooltipLogia: String = Initializer.id("type_logia").toTranslationKey("tooltip")
-
     val rubberFruit = WitherFruit(
+        WitherFruitType.Paramecia,
         "rubber_fruit",
-        Text.translatable(tooltipParamecia)
     )
     val catLeopardFruit = WitherFruit(
+        WitherFruitType.Zoan,
         "cat_leopard_fruit",
-        Text.translatable(tooltipZoan)
     )
     val fireFruit = WitherFruit(
-        "fire_fruit",
-        Text.translatable(tooltipLogia)
+        WitherFruitType.Logia,
+        "fire_fruit"
     )
     fun initialize() {
         Registry.register(
