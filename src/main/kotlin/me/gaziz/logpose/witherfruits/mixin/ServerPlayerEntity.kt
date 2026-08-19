@@ -24,7 +24,7 @@ abstract class ServerPlayerEntity {
     ) {
         if(
             isTouchingWater() &&
-            UsersManager.fruits != null
+            UsersManager.fruits[getUuid()] != null
         ) {
             ci.cancel()
         }

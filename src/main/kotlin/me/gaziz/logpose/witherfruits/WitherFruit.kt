@@ -53,6 +53,7 @@ class WitherFruit(
             tooltip.add(tooltipCnt)
         }
     }
+
     override fun finishUsing(
         stack: ItemStack,
         world: World,
@@ -62,6 +63,7 @@ class WitherFruit(
             val uuid = user.uuidAsString
             val fruit = fruits[uuid]
             if(fruit != null) {
+                stack.decrement(1)
                 user.kill()
                 UsersManager.removeFruit(uuid)
             } else {
