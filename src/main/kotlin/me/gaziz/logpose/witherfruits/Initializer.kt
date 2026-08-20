@@ -9,6 +9,6 @@ object Initializer : ModInitializer {
 	fun id(path: String): Identifier = Identifier.of(MOD_ID, path)
 	override fun onInitialize() {
 		ModItems.initialize()
-		UsersManager.initLoop()
+		UsersManager.initialize()
 	}
 }
