@@ -1,10 +1,13 @@
 package me.gaziz.logpose.witherfruits
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.entity.effect.StatusEffect
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.registry.entry.RegistryEntry
+import org.slf4j.LoggerFactory
 
 object UsersManager {
     private val negativeEffect: (RegistryEntry<StatusEffect>) -> StatusEffectInstance = {
@@ -25,6 +28,16 @@ object UsersManager {
     )
     private var hasNegativeEffects = false
     fun initialize(){
+        ServerPlayConnectionEvents.JOIN.register { handler, sender, server ->
+            LoggerFactory
+                .getLogger(UsersManager::class.java)
+                .info("JOINED")
+            val player = handler.player
+            val state = PersistFruitsState().getPersistFruitsState(server)
+            val fruit = state.getFruits()[player.uuidAsString]
+            val payload = CanSwimPayload(fruit == null)
+            ServerPlayNetworking.send(player, payload)
+        }
         ServerTickEvents.END_SERVER_TICK.register { server ->
             val state = PersistFruitsState().getPersistFruitsState(server)
             server.playerManager.playerList.forEach { player ->
