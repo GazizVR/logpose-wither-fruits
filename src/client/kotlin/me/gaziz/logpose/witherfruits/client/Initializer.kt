@@ -1,7 +1,19 @@
 package me.gaziz.logpose.witherfruits.client
 
+import me.gaziz.logpose.witherfruits.CanSwimPayload
 import net.fabricmc.api.ClientModInitializer
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 
 object Initializer : ClientModInitializer {
-	override fun onInitializeClient() {}
+	var canSwim: Boolean = true
+	private set
+	override fun onInitializeClient() {
+		ClientPlayNetworking.registerGlobalReceiver(
+			CanSwimPayload.ID
+        ) { payload, _ ->
+            if (payload is CanSwimPayload) {
+                canSwim = payload.value
+            }
+        }
+    }
 }

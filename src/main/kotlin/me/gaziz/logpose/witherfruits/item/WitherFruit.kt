@@ -1,7 +1,9 @@
 package me.gaziz.logpose.witherfruits.item
 
+import me.gaziz.logpose.witherfruits.CanSwimPayload
 import me.gaziz.logpose.witherfruits.Initializer
 import me.gaziz.logpose.witherfruits.PersistFruitsState
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.FoodComponent
 import net.minecraft.entity.LivingEntity
@@ -10,6 +12,7 @@ import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.tooltip.TooltipType
+import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
@@ -84,6 +87,10 @@ class WitherFruit(
                 state.removeFruit(uuid)
             } else {
                 state.setFruit(uuid,this)
+            }
+            if(user is ServerPlayerEntity) {
+                val payload = CanSwimPayload(fruit != null)
+                ServerPlayNetworking.send(user,payload)
             }
         }
         val foodComponent = stack.get<FoodComponent?>(DataComponentTypes.FOOD)
