@@ -72,7 +72,7 @@ class PersistFruitsState(
             .getOrElse { emptyMap() }
         return PersistFruitsState(loadFruits)
     }
-    private val type = PersistentState.Type<PersistFruitsState>(
+    private val type = Type(
         ::PersistFruitsState,
         { tag, reg -> readNBT(tag,reg) },
         null,

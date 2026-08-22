@@ -47,6 +47,7 @@ object ModItems {
     val rubberFruit = ParameciaFruit("rubber_fruit")
     val catLeopardFruit = ZoanFruit("cat_leopard_fruit")
     val fireFruit = LogiaFruit("fire_fruit")
+
     fun initialize() {
         Registry.register(
             Registries.ITEM_GROUP,

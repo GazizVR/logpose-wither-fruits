@@ -38,7 +38,7 @@ object NetworkManager {
                         if(it == ModItems.catLeopardFruit) {
                             when {
                                 payload.abilityNumber == 1 -> {
-                                    ctx.player().health = ctx.player().maxHealth
+                                    ModItems.catLeopardFruit.toggleTransform(ctx.player())
                                 }
                             }
                         } else {
