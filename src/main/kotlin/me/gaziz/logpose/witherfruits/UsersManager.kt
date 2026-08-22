@@ -39,7 +39,8 @@ object UsersManager {
         ServerTickEvents.END_SERVER_TICK.register { server ->
             val state = PersistFruitsState().getPersistFruitsState(server)
             server.playerManager.playerList.forEach { player ->
-                if(state.getFruits().containsKey(player.uuidAsString)) {
+                val playerFruit = state.getFruits()[player.uuidAsString]
+                if(playerFruit != null) {
                     if(player.isTouchingWater) {
                         player.setJumping(false)
                         hasNegativeEffects = true

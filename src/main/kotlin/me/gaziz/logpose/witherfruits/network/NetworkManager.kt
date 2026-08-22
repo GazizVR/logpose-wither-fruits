@@ -1,6 +1,7 @@
 package me.gaziz.logpose.witherfruits.network
 
 import me.gaziz.logpose.witherfruits.PersistFruitsState
+import me.gaziz.logpose.witherfruits.item.ModItems
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.network.RegistryByteBuf
@@ -34,9 +35,17 @@ object NetworkManager {
                     .getPersistFruitsState(ctx.server())
                     .getFruits()[ctx.player().uuidAsString]
                     ?.let {
-                        LoggerFactory
-                            .getLogger(NetworkManager::class.java)
-                            .info("${ctx.player().name.string} ${payload.abilityNumber}")
+                        if(it == ModItems.catLeopardFruit) {
+                            when {
+                                payload.abilityNumber == 1 -> {
+                                    ctx.player().health = ctx.player().maxHealth
+                                }
+                            }
+                        } else {
+                            LoggerFactory
+                                .getLogger(NetworkManager::class.java)
+                                .info("${ctx.player().name.string} ${payload.abilityNumber}")
+                        }
                     }
             }
         }
