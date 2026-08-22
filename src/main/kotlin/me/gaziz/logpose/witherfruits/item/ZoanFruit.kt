@@ -17,9 +17,15 @@ class ZoanFruit(
     ) {
         isTransform = !isTransform
         if(isTransform) {
-            player.sendMessage(Text.literal("transformation"))
+            player.sendMessageToClient(
+                Text.literal("transformation"),
+                true
+            )
         } else {
-            player.sendMessage(Text.literal("inverse transformation"))
+            player.sendMessageToClient(
+                Text.literal("inverse transformation"),
+                true
+            )
         }
     }
 }

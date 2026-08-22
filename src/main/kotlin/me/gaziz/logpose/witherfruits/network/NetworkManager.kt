@@ -8,7 +8,7 @@ import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.packet.CustomPayload
 import net.minecraft.server.network.ServerPlayerEntity
-import org.slf4j.LoggerFactory
+import net.minecraft.text.Text
 
 object NetworkManager {
     fun sendCanSwimS2C(
@@ -42,9 +42,10 @@ object NetworkManager {
                                 }
                             }
                         } else {
-                            LoggerFactory
-                                .getLogger(NetworkManager::class.java)
-                                .info("${ctx.player().name.string} ${payload.abilityNumber}")
+                            ctx.player().sendMessageToClient(
+                                Text.literal("Not implemented yet"),
+                                true
+                            )
                         }
                     }
             }
