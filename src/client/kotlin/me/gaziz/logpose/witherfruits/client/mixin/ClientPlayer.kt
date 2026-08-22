@@ -1,6 +1,6 @@
 package me.gaziz.logpose.witherfruits.client.mixin
 
-import me.gaziz.logpose.witherfruits.client.Initializer
+import me.gaziz.logpose.witherfruits.client.ClientManager
 import net.minecraft.entity.LivingEntity
 import org.spongepowered.asm.mixin.Mixin
 import org.spongepowered.asm.mixin.injection.At
@@ -15,7 +15,7 @@ class ClientPlayer {
         cancellable = true
     )
     fun onSwimUpward(ci: CallbackInfo) {
-        if(!Initializer.canSwim) {
+        if(!ClientManager.canSwim) {
             ci.cancel()
         }
     }

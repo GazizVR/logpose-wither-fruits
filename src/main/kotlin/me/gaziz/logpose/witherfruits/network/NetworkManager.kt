@@ -1,5 +1,6 @@
 package me.gaziz.logpose.witherfruits.network
 
+import me.gaziz.logpose.witherfruits.PersistFruitsState
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.network.RegistryByteBuf
@@ -29,9 +30,14 @@ object NetworkManager {
             AbilityEventPayload.ID,
         ) { payload, ctx ->
             if(payload is AbilityEventPayload) {
-                LoggerFactory
-                    .getLogger(NetworkManager::class.java)
-                    .info("${ctx.player().name.string} ${payload.abilityNumber}")
+                PersistFruitsState()
+                    .getPersistFruitsState(ctx.server())
+                    .getFruits()[ctx.player().uuidAsString]
+                    ?.let {
+                        LoggerFactory
+                            .getLogger(NetworkManager::class.java)
+                            .info("${ctx.player().name.string} ${payload.abilityNumber}")
+                    }
             }
         }
     }
