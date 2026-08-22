@@ -36,6 +36,14 @@ object ModItems {
             .register { it.add { item } }
     }
 
+    private fun tooltipKey(key: String) = Initializer
+        .id(key)
+        .toTranslationKey("tooltip")
+
+    val parameciaTooltipKey: String = tooltipKey("type_paramecia")
+    val logiaTooltipKey: String = tooltipKey("type_logia")
+    val zoanTooltipKey: String = tooltipKey("type_zoan")
+
     val rubberFruit = ParameciaFruit("rubber_fruit")
     val catLeopardFruit = ZoanFruit("cat_leopard_fruit")
     val fireFruit = LogiaFruit("fire_fruit")
