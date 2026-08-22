@@ -36,18 +36,9 @@ object ModItems {
             .register { it.add { item } }
     }
 
-    val rubberFruit = WitherFruit(
-        WitherFruitType.Paramecia,
-        "rubber_fruit",
-    )
-    val catLeopardFruit = WitherFruit(
-        WitherFruitType.Zoan,
-        "cat_leopard_fruit",
-    )
-    val fireFruit = WitherFruit(
-        WitherFruitType.Logia,
-        "fire_fruit"
-    )
+    val rubberFruit = ParameciaFruit("rubber_fruit")
+    val catLeopardFruit = ZoanFruit("cat_leopard_fruit")
+    val fireFruit = LogiaFruit("fire_fruit")
     fun initialize() {
         Registry.register(
             Registries.ITEM_GROUP,

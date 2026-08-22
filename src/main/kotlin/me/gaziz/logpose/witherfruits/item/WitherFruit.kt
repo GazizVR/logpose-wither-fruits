@@ -14,16 +14,18 @@ import net.minecraft.item.tooltip.TooltipType
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
+import net.minecraft.util.Rarity
 import net.minecraft.world.World
 import java.util.*
 
-class WitherFruit(
-    private val fruitType: WitherFruitType,
+abstract class WitherFruit(
     path: String,
+    rarity: Rarity,
+    val tooltipKey: String? = null
 ): Item(
     Settings()
         .maxCount(1)
-        .rarity(fruitType.rarity)
+        .rarity(rarity)
         .food(
             FoodComponent(
                 6,
@@ -52,9 +54,9 @@ class WitherFruit(
         tooltip: MutableList<Text>,
         type: TooltipType
     ) {
-        tooltip.add(
-            Text.translatable(fruitType.tooltipId)
-        )
+        if(tooltipKey != null) {
+            tooltip.add(Text.translatable(tooltipKey))
+        }
     }
 
     override fun finishUsing(

@@ -1,7 +1,9 @@
 package me.gaziz.logpose.witherfruits.datagen
 
+import me.gaziz.logpose.witherfruits.item.LogiaFruit
 import me.gaziz.logpose.witherfruits.item.ModItems
-import me.gaziz.logpose.witherfruits.item.WitherFruitType
+import me.gaziz.logpose.witherfruits.item.ParameciaFruit
+import me.gaziz.logpose.witherfruits.item.ZoanFruit
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.minecraft.registry.RegistryWrapper
@@ -25,15 +27,15 @@ class EnglishLangProvider(
         )
 
         translationBuilder.add(
-            WitherFruitType.Paramecia.tooltipId,
+            ParameciaFruit().tooltipKey,
             "Type: Paramecia"
         )
         translationBuilder.add(
-            WitherFruitType.Zoan.tooltipId,
+            ZoanFruit().tooltipKey,
             "Type: Zoan"
         )
         translationBuilder.add(
-            WitherFruitType.Logia.tooltipId,
+            LogiaFruit().tooltipKey,
             "Type: Logia"
         )
 
