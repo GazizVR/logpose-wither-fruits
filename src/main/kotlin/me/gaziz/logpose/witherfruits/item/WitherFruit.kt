@@ -1,9 +1,8 @@
 package me.gaziz.logpose.witherfruits.item
 
-import me.gaziz.logpose.witherfruits.CanSwimPayload
 import me.gaziz.logpose.witherfruits.Initializer
 import me.gaziz.logpose.witherfruits.PersistFruitsState
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
+import me.gaziz.logpose.witherfruits.network.NetworkManager
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.FoodComponent
 import net.minecraft.entity.LivingEntity
@@ -89,8 +88,10 @@ class WitherFruit(
                 state.setFruit(uuid,this)
             }
             if(user is ServerPlayerEntity) {
-                val payload = CanSwimPayload(fruit != null)
-                ServerPlayNetworking.send(user,payload)
+                NetworkManager.sendCanSwimS2C(
+                    user,
+                    fruit != null,
+                )
             }
         }
         val foodComponent = stack.get<FoodComponent?>(DataComponentTypes.FOOD)

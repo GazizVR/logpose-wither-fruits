@@ -1,6 +1,7 @@
-package me.gaziz.logpose.witherfruits
+package me.gaziz.logpose.witherfruits.network
 
 import io.netty.buffer.ByteBuf
+import me.gaziz.logpose.witherfruits.Initializer
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.network.packet.CustomPayload
