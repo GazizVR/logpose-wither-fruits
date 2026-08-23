@@ -8,7 +8,7 @@ import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.registry.entry.RegistryEntry
 
-object UsersManager {
+object DebufManager {
     private val negativeEffect: (RegistryEntry<StatusEffect>) -> StatusEffectInstance = {
         StatusEffectInstance(
             it,

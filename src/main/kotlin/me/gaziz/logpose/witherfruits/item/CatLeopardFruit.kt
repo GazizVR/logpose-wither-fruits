@@ -73,40 +73,35 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
         createModifier(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE,2.5),
         createModifier(EntityAttributes.GENERIC_FALL_DAMAGE_MULTIPLIER,-0.2),
     )
-    override fun transform(user: LivingEntity) {
-        currentForm = Form.Full
-        transformEffects.forEach {
-            user.addStatusEffect(it)
-        }
-        transformModifiers.forEach { (k, v) ->
-            setModifier(user,k to v)
-        }
-    }
-    override fun hybridTransform(user: LivingEntity) {
-        currentForm = Form.Hybrid
-    }
-    override fun baseTransform(user: LivingEntity) {
-        when(currentForm) {
-            Form.Full -> {
-                transformModifiers.forEach { (k, v) ->
-                    removeModifier(user,k to v)
-                }
-                transformEffects.forEach {
-                    user.removeStatusEffect(it.effectType)
-                }
-            }
-            else -> {}
-        }
-        currentForm = Form.Base
-    }
 
-    fun toggleTransform(
+    override fun toggleTransform(
         player: ServerPlayerEntity
     ) {
         if(currentForm == Form.Full){
-            baseTransform(player)
+            when(currentForm) {
+                Form.Full -> {
+                    transformModifiers.forEach { (k, v) ->
+                        removeModifier(player,k to v)
+                    }
+                    transformEffects.forEach {
+                        player.removeStatusEffect(it.effectType)
+                    }
+                }
+                else -> {}
+            }
+            currentForm = Form.Base
         } else {
-            transform(player)
+            currentForm = Form.Full
+            transformEffects.forEach {
+                player.addStatusEffect(it)
+            }
+            transformModifiers.forEach { (k, v) ->
+                setModifier(player,k to v)
+            }
         }
+    }
+
+    override fun toggleHybridForm(player: ServerPlayerEntity) {
+        TODO("Not yet implemented")
     }
 }

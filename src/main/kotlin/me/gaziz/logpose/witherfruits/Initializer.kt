@@ -6,11 +6,12 @@ import net.fabricmc.api.ModInitializer
 import net.minecraft.util.Identifier
 
 object Initializer : ModInitializer {
-	const val MOD_ID: String = "logpose-wither-fruits"
+	const val MOD_ID = "logpose-wither-fruits"
+	val MOD_NAME_ID: Identifier = id("name").withPrefixedPath("text")
 	fun id(path: String): Identifier = Identifier.of(MOD_ID, path)
 	override fun onInitialize() {
 		NetworkManager.initialize()
 		ModItems.initialize()
-		UsersManager.initialize()
+		DebufManager.initialize()
 	}
 }

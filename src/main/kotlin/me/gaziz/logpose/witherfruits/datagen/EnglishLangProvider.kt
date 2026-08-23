@@ -1,5 +1,6 @@
 package me.gaziz.logpose.witherfruits.datagen
 
+import me.gaziz.logpose.witherfruits.Initializer
 import me.gaziz.logpose.witherfruits.item.ModItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
@@ -19,7 +20,7 @@ class EnglishLangProvider(
         translationBuilder: TranslationBuilder
     ) {
         translationBuilder.add(
-            ModItems.ITEM_GROUP_KEY,
+            Initializer.MOD_NAME_ID,
             "LogPose: Wither Fruits"
         )
 

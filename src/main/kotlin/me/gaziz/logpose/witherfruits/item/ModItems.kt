@@ -13,14 +13,13 @@ import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 
 object ModItems {
-    const val ITEM_GROUP_KEY = "itemgroup.${Initializer.MOD_ID}.wither_fruits"
     private val itemGroupKey = RegistryKey.of(
         RegistryKeys.ITEM_GROUP,
-        Initializer.id(ITEM_GROUP_KEY)
+        Initializer.MOD_NAME_ID
     )
     private val itemGroup = FabricItemGroup.builder()
         .icon { ItemStack(rubberFruit) }
-        .displayName(Text.translatable(ITEM_GROUP_KEY))
+        .displayName(Text.translatable(Initializer.MOD_NAME_ID.toTranslationKey()))
         .build()
     private fun register(
         itemId: Identifier,

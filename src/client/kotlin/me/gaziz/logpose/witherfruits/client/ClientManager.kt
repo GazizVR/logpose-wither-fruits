@@ -1,6 +1,6 @@
 package me.gaziz.logpose.witherfruits.client
 
-import me.gaziz.logpose.witherfruits.item.ModItems
+import me.gaziz.logpose.witherfruits.Initializer
 import me.gaziz.logpose.witherfruits.network.AbilityEventPayload
 import me.gaziz.logpose.witherfruits.network.CanSwimPayload
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
@@ -27,7 +27,7 @@ object ClientManager {
                 "Ability 1",
                 InputUtil.Type.KEYSYM,
                 InputUtil.GLFW_KEY_R,
-                Text.translatable(ModItems.ITEM_GROUP_KEY).string
+                Text.translatable(Initializer.MOD_NAME_ID.toTranslationKey()).string
             )
         )
         ClientTickEvents.END_CLIENT_TICK.register {
