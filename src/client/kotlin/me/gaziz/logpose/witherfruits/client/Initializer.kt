@@ -4,6 +4,7 @@ import net.fabricmc.api.ClientModInitializer
 
 object Initializer : ClientModInitializer {
 	override fun onInitializeClient() {
+        NetworkManager.initialize()
         ClientManager.initialize()
     }
 }

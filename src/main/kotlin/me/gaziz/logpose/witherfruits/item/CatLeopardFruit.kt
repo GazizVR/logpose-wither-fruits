@@ -101,7 +101,9 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
         }
     }
 
-    override fun toggleHybridForm(player: ServerPlayerEntity) {
-        TODO("Not yet implemented")
+    override fun toggleHybridForm(
+        player: ServerPlayerEntity
+    ) {
+        currentForm = if(currentForm == Form.Hybrid) Form.Base else Form.Hybrid
     }
 }
