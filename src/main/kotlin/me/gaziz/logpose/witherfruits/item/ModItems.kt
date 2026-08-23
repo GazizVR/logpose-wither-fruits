@@ -45,7 +45,7 @@ object ModItems {
     val zoanTooltipKey: String = tooltipKey("type_zoan")
 
     val rubberFruit = ParameciaFruit("rubber_fruit")
-    val catLeopardFruit = ZoanFruit("cat_leopard_fruit")
+    val catLeopardFruit = CatLeopardFruit()
     val fireFruit = LogiaFruit("fire_fruit")
 
     fun initialize() {

@@ -66,7 +66,8 @@ abstract class WitherFruit(
     ): ItemStack {
         if(
             !world.isClient &&
-            world.server != null
+            world.server != null &&
+            user is ServerPlayerEntity
         ) {
             val state = PersistFruitsState().getPersistFruitsState(world.server!!)
             val fruits = state.getFruits()
@@ -89,12 +90,10 @@ abstract class WitherFruit(
             } else {
                 state.setFruit(uuid,this)
             }
-            if(user is ServerPlayerEntity) {
-                NetworkManager.sendCanSwimS2C(
-                    user,
-                    fruit != null,
-                )
-            }
+            NetworkManager.sendCanSwimS2C(
+                user,
+                fruit != null,
+            )
         }
         val foodComponent = stack.get<FoodComponent?>(DataComponentTypes.FOOD)
         return if (foodComponent != null) user.eatFood(world, stack, foodComponent) else stack
