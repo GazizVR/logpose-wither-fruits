@@ -36,10 +36,9 @@ object NetworkManager {
                     .getFruits()[ctx.player().uuidAsString]
                     ?.let {
                         if(it == ModItems.catLeopardFruit) {
-                            when {
-                                payload.abilityNumber == 1 -> {
-                                    ModItems.catLeopardFruit.toggleTransform(ctx.player())
-                                }
+                            when(payload.abilityNumber) {
+                                1 -> ModItems.catLeopardFruit.toggleTransform(ctx.player())
+                                2 -> ModItems.catLeopardFruit.toggleHybridForm(ctx.player())
                             }
                         } else {
                             ctx.player().sendMessageToClient(

@@ -9,6 +9,7 @@ import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.text.Text
 
 class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
     override var currentForm: Form = Form.Base
@@ -41,19 +42,22 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
         createModifier(EntityAttributes.GENERIC_FALL_DAMAGE_MULTIPLIER,-0.2),
     )
 
+    private fun baseTransform(
+        player: ServerPlayerEntity,
+        changeForm: Boolean = false
+    ) {
+        BuffManager.removeModifiers(player)
+        BuffManager.removeEffects(player)
+        if(changeForm) currentForm = Form.Base
+    }
+
     override fun toggleTransform(
         player: ServerPlayerEntity
     ) {
         if(currentForm == Form.Full){
-            when(currentForm) {
-                Form.Full -> {
-                    BuffManager.removeModifiers(player)
-                    BuffManager.removeEffects(player)
-                }
-                else -> {}
-            }
-            currentForm = Form.Base
+            baseTransform(player)
         } else {
+            baseTransform(player,false)
             currentForm = Form.Full
             BuffManager.setEffects(player.uuidAsString,transformEffects)
             BuffManager.setModifiers(player.uuidAsString,transformModifiers)
@@ -63,6 +67,12 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
     override fun toggleHybridForm(
         player: ServerPlayerEntity
     ) {
-        currentForm = if(currentForm == Form.Hybrid) Form.Base else Form.Hybrid
+        if(currentForm == Form.Hybrid) {
+            baseTransform(player)
+        } else {
+            baseTransform(player,false)
+            currentForm = Form.Hybrid
+        }
+        player.sendMessage(Text.literal(currentForm.name),true)
     }
 }

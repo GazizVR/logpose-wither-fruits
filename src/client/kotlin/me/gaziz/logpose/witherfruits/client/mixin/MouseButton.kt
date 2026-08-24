@@ -1,6 +1,6 @@
 package me.gaziz.logpose.witherfruits.client.mixin
 
-import me.gaziz.logpose.witherfruits.client.ClientManager
+import me.gaziz.logpose.witherfruits.client.Initializer.canSwim
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.Mouse
 import net.minecraft.client.option.KeyBinding
@@ -25,7 +25,7 @@ class MouseButton {
     )
     private fun onMouseButton(cir: CallbackInfo) {
         if(
-            !ClientManager.canSwim &&
+            !canSwim &&
             client?.currentScreen == null &&
             client?.player?.isTouchingWater == true
         ) {
