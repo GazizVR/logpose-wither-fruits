@@ -16,7 +16,7 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
 
     private val transformEffects = listOf(
         createEffect(StatusEffects.NIGHT_VISION),
-        createEffect(StatusEffects.HUNGER,1),
+        createEffect(StatusEffects.HUNGER),
     )
     private fun createModifier(
         attr: RegistryEntry<EntityAttribute>,
@@ -72,14 +72,18 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
 
     private val hybridEffects = listOf(
         createEffect(StatusEffects.NIGHT_VISION),
-        createEffect(StatusEffects.HUNGER,2)
+        createEffect(StatusEffects.HUNGER,1)
     )
     private val hybridModifiers = listOf(
         createModifier(EntityAttributes.GENERIC_SCALE,0.67),
         createModifier(EntityAttributes.GENERIC_STEP_HEIGHT,0.4),
         createModifier(EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE,0.5),
-        createModifier(EntityAttributes.GENERIC_MAX_HEALTH,6.0),
+        createModifier(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE,0.5),
+        //Damage
+        createModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE,6.0),
+        createModifier(EntityAttributes.GENERIC_ATTACK_KNOCKBACK,0.3),
         //Defense
+        createModifier(EntityAttributes.GENERIC_MAX_HEALTH,6.0),
         createModifier(EntityAttributes.GENERIC_ARMOR,8.0),
         createModifier(EntityAttributes.GENERIC_ARMOR_TOUGHNESS,4.0),
         createModifier(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,0.3),
