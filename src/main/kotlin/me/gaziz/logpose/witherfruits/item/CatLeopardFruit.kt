@@ -1,7 +1,9 @@
 package me.gaziz.logpose.witherfruits.item
 
-import me.gaziz.logpose.witherfruits.ability.AbilityManager
-import me.gaziz.logpose.witherfruits.ability.Modifier
+import me.gaziz.logpose.witherfruits.modifier.BuffManager
+import me.gaziz.logpose.witherfruits.modifier.Modifier
+import me.gaziz.logpose.witherfruits.modifier.createEffect
+import me.gaziz.logpose.witherfruits.modifier.createModifier
 import net.minecraft.entity.attribute.EntityAttribute
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.effect.StatusEffects
@@ -12,15 +14,15 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
     override var currentForm: Form = Form.Base
 
     private val transformEffects = listOf(
-        AbilityManager.createEffect(StatusEffects.NIGHT_VISION),
-        AbilityManager.createEffect(StatusEffects.HUNGER,1),
+        createEffect(StatusEffects.NIGHT_VISION),
+        createEffect(StatusEffects.HUNGER,1),
     )
     private fun createModifier(
         attr: RegistryEntry<EntityAttribute>,
         value: Double,
     ): Modifier {
         val prefix = "leopard"
-        return AbilityManager.createModifier(attr, value, prefix)
+        return createModifier(attr, value, prefix)
     }
     private val transformModifiers = listOf(
         createModifier(EntityAttributes.GENERIC_SCALE,-0.34),
@@ -45,16 +47,16 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
         if(currentForm == Form.Full){
             when(currentForm) {
                 Form.Full -> {
-                    AbilityManager.removeModifiers(player)
-                    AbilityManager.removeEffects(player)
+                    BuffManager.removeModifiers(player)
+                    BuffManager.removeEffects(player)
                 }
                 else -> {}
             }
             currentForm = Form.Base
         } else {
             currentForm = Form.Full
-            AbilityManager.setEffects(player.uuidAsString,transformEffects)
-            AbilityManager.setModifiers(player.uuidAsString,transformModifiers)
+            BuffManager.setEffects(player.uuidAsString,transformEffects)
+            BuffManager.setModifiers(player.uuidAsString,transformModifiers)
         }
     }
 

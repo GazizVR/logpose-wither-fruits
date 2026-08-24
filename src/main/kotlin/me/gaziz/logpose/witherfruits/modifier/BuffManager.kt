@@ -1,28 +1,10 @@
-package me.gaziz.logpose.witherfruits.ability
+package me.gaziz.logpose.witherfruits.modifier
 
-import me.gaziz.logpose.witherfruits.Initializer
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
-import net.minecraft.entity.attribute.EntityAttribute
-import net.minecraft.entity.attribute.EntityAttributeModifier
-import net.minecraft.entity.effect.StatusEffect
 import net.minecraft.entity.effect.StatusEffectInstance
-import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.server.network.ServerPlayerEntity
 
-object AbilityManager {
-    fun createEffect(
-        type: RegistryEntry<StatusEffect>,
-        amplifier: Int = 0
-    ): StatusEffectInstance {
-        return StatusEffectInstance(
-            type,
-            StatusEffectInstance.INFINITE,
-            amplifier,
-            false,
-            false,
-            false
-        )
-    }
+object BuffManager {
     fun setEffects(
         key: String,
         value: List<StatusEffectInstance>
@@ -36,21 +18,6 @@ object AbilityManager {
         effects.remove(player.uuidAsString)
     }
     private val effects = mutableMapOf<String,List<StatusEffectInstance>>()
-    fun createModifier(
-        attr: RegistryEntry<EntityAttribute>,
-        value: Double,
-        prefix: String
-    ): Modifier {
-        val path = "${prefix}_${attr.idAsString.substringAfterLast(".")}"
-        return Modifier(
-            attr,
-            EntityAttributeModifier(
-                Initializer.id(path).withPrefixedPath("attribute"),
-                value,
-                EntityAttributeModifier.Operation.ADD_VALUE
-            )
-        )
-    }
     fun setModifiers(
         key: String,
         value: List<Modifier>

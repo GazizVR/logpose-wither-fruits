@@ -1,4 +1,4 @@
-package me.gaziz.logpose.witherfruits.ability
+package me.gaziz.logpose.witherfruits.modifier
 
 import net.minecraft.entity.attribute.EntityAttribute
 import net.minecraft.entity.attribute.EntityAttributeModifier
