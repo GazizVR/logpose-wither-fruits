@@ -9,7 +9,6 @@ import net.minecraft.text.Text
 
 object ClientManager {
     var canSwim: Boolean = true
-    var isTouchingWater = false
     private var isPressed = false
     fun initialize() {
         val firstAbilityKey = KeyBindingHelper.registerKeyBinding(
@@ -21,23 +20,17 @@ object ClientManager {
             )
         )
         ClientTickEvents.END_CLIENT_TICK.register {
-            val player = it?.player
-            if(player != null) {
-                isTouchingWater = player.isTouchingWater
-            }
-            if(
-                firstAbilityKey.isPressed
-            ) {
+            if(it?.player?.isTouchingWater == false) {
                 if(
-                    !isPressed &&
-                    !canSwim &&
-                    player?.isTouchingWater == false
+                    firstAbilityKey.isPressed
                 ) {
-                    isPressed = true
-                    NetworkManager.sendAbilityEventC2S(1)
+                    if(!isPressed && !canSwim) {
+                        isPressed = true
+                        NetworkManager.sendAbilityEventC2S(1)
+                    }
+                } else {
+                    isPressed = false
                 }
-            } else {
-                isPressed = false
             }
         }
     }
