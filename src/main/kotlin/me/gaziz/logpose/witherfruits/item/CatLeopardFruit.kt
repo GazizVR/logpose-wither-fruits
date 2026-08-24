@@ -33,13 +33,13 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
         createModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE,3.0),
         createModifier(EntityAttributes.GENERIC_ATTACK_KNOCKBACK,-0.5),
         //Movement
-        createModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED,0.04),
+        createModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED,0.05),
         createModifier(EntityAttributes.PLAYER_SNEAKING_SPEED,0.3),
         createModifier(EntityAttributes.GENERIC_STEP_HEIGHT,0.4),
         //Jump
         createModifier(EntityAttributes.GENERIC_JUMP_STRENGTH,0.2),
-        createModifier(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE,2.5),
-        createModifier(EntityAttributes.GENERIC_FALL_DAMAGE_MULTIPLIER,-0.2),
+        createModifier(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE,3.0),
+        createModifier(EntityAttributes.GENERIC_FALL_DAMAGE_MULTIPLIER,-0.25),
     )
 
     private fun baseTransform(
@@ -57,12 +57,41 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
         if(currentForm == Form.Full){
             baseTransform(player)
         } else {
-            baseTransform(player,false)
-            currentForm = Form.Full
-            BuffManager.setEffects(player.uuidAsString,transformEffects)
-            BuffManager.setModifiers(player.uuidAsString,transformModifiers)
+            val hungerCost = 2
+            if(player.hungerManager.foodLevel >= hungerCost) {
+                baseTransform(player,false)
+                BuffManager.setEffects(player.uuidAsString,transformEffects)
+                BuffManager.setModifiers(player.uuidAsString,transformModifiers)
+                player.hungerManager.foodLevel -= hungerCost
+                currentForm = Form.Full
+            } else {
+                player.sendMessage(Text.literal("Not enough satiety"),true)
+            }
         }
     }
+
+    private val hybridEffects = listOf(
+        createEffect(StatusEffects.NIGHT_VISION),
+        createEffect(StatusEffects.HUNGER,2)
+    )
+    private val hybridModifiers = listOf(
+        createModifier(EntityAttributes.GENERIC_SCALE,0.67),
+        createModifier(EntityAttributes.GENERIC_STEP_HEIGHT,0.4),
+        createModifier(EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE,0.5),
+        createModifier(EntityAttributes.GENERIC_MAX_HEALTH,6.0),
+        //Defense
+        createModifier(EntityAttributes.GENERIC_ARMOR,8.0),
+        createModifier(EntityAttributes.GENERIC_ARMOR_TOUGHNESS,4.0),
+        createModifier(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,0.3),
+        createModifier(EntityAttributes.GENERIC_EXPLOSION_KNOCKBACK_RESISTANCE,0.5),
+        //Movement
+        createModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED,0.025),
+        createModifier(EntityAttributes.PLAYER_SNEAKING_SPEED,0.15),
+        //Jump
+        createModifier(EntityAttributes.GENERIC_JUMP_STRENGTH,0.13),
+        createModifier(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE,1.25),
+        createModifier(EntityAttributes.GENERIC_FALL_DAMAGE_MULTIPLIER,-0.125),
+    )
 
     override fun toggleHybridForm(
         player: ServerPlayerEntity
@@ -70,9 +99,16 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
         if(currentForm == Form.Hybrid) {
             baseTransform(player)
         } else {
-            baseTransform(player,false)
-            currentForm = Form.Hybrid
+            val hungerCost = 4
+            if(player.hungerManager.foodLevel >= hungerCost) {
+                baseTransform(player,false)
+                BuffManager.setEffects(player.uuidAsString,hybridEffects)
+                BuffManager.setModifiers(player.uuidAsString,hybridModifiers)
+                player.hungerManager.foodLevel -= hungerCost
+                currentForm = Form.Hybrid
+            } else {
+                player.sendMessage(Text.literal("Not enough satiety"),true)
+            }
         }
-        player.sendMessage(Text.literal(currentForm.name),true)
     }
 }
