@@ -9,6 +9,7 @@ import net.minecraft.text.Text
 
 object ClientManager {
     var canSwim: Boolean = true
+    var isTouchingWater = false
     private var isPressed = false
     fun initialize() {
         val firstAbilityKey = KeyBindingHelper.registerKeyBinding(
@@ -20,12 +21,17 @@ object ClientManager {
             )
         )
         ClientTickEvents.END_CLIENT_TICK.register {
+            val player = it?.player
+            if(player != null) {
+                isTouchingWater = player.isTouchingWater
+            }
             if(
                 firstAbilityKey.isPressed
             ) {
                 if(
                     !isPressed &&
-                    !canSwim
+                    !canSwim &&
+                    player?.isTouchingWater == false
                 ) {
                     isPressed = true
                     NetworkManager.sendAbilityEventC2S(1)

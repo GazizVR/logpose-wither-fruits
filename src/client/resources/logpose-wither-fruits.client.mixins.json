@@ -2,5 +2,5 @@
     "required": true,
     "compatibilityLevel": "JAVA_21",
     "package": "me.gaziz.logpose.witherfruits.client.mixin",
-    "client": ["ClientPlayer"]
+    "client": ["LivingPlayer"]
 }
