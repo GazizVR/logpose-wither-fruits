@@ -2,5 +2,8 @@
     "required": true,
     "compatibilityLevel": "JAVA_21",
     "package": "me.gaziz.logpose.witherfruits.client.mixin",
-    "client": ["LivingPlayer"]
+    "client": [
+        "ClientPlayer",
+        "MouseButton"
+    ]
 }

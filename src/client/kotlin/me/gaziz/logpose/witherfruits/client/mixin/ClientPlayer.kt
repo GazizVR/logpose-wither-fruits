@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 
 @Mixin(ClientPlayerEntity::class)
-class LivingPlayer {
+class ClientPlayer {
     @Inject(
         method = ["tickMovement"],
         at = [
@@ -22,12 +22,10 @@ class LivingPlayer {
     fun afterInputTick(ci: CallbackInfo) {
         val player = this as? ClientPlayerEntity ?: return
         if (!ClientManager.canSwim && player.isTouchingWater) {
-            player.input.jumping = false
-            player.input.sneaking = false
-            player.isSprinting = false
-
             player.input.movementForward = 0.0f
             player.input.movementSideways = 0.0f
+            player.input.jumping = false
+            player.input.sneaking = false
         }
     }
 }
