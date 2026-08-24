@@ -42,24 +42,23 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
         createModifier(EntityAttributes.GENERIC_FALL_DAMAGE_MULTIPLIER,-0.25),
     )
 
-    private fun baseTransform(
-        player: ServerPlayerEntity,
-        changeForm: Boolean = false
+    private fun removeModifiers(
+        player: ServerPlayerEntity
     ) {
         BuffManager.removeModifiers(player)
         BuffManager.removeEffects(player)
-        if(changeForm) currentForm = Form.Base
     }
 
     override fun toggleTransform(
         player: ServerPlayerEntity
     ) {
         if(currentForm == Form.Full){
-            baseTransform(player)
+            removeModifiers(player)
+            currentForm = Form.Base
         } else {
             val hungerCost = 2
             if(player.hungerManager.foodLevel >= hungerCost) {
-                baseTransform(player,false)
+                removeModifiers(player)
                 BuffManager.setEffects(player.uuidAsString,transformEffects)
                 BuffManager.setModifiers(player.uuidAsString,transformModifiers)
                 player.hungerManager.foodLevel -= hungerCost
@@ -101,11 +100,12 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
         player: ServerPlayerEntity
     ) {
         if(currentForm == Form.Hybrid) {
-            baseTransform(player)
+            removeModifiers(player)
+            currentForm = Form.Base
         } else {
             val hungerCost = 4
             if(player.hungerManager.foodLevel >= hungerCost) {
-                baseTransform(player,false)
+                removeModifiers(player)
                 BuffManager.setEffects(player.uuidAsString,hybridEffects)
                 BuffManager.setModifiers(player.uuidAsString,hybridModifiers)
                 player.hungerManager.foodLevel -= hungerCost
