@@ -1,5 +1,7 @@
 package me.gaziz.logpose.witherfruits
 
+import me.gaziz.logpose.witherfruits.ability.AbilityManager
+import me.gaziz.logpose.witherfruits.ability.DebuffManager
 import me.gaziz.logpose.witherfruits.item.ModItems
 import me.gaziz.logpose.witherfruits.network.NetworkManager
 import net.fabricmc.api.ModInitializer
@@ -12,6 +14,7 @@ object Initializer : ModInitializer {
 	override fun onInitialize() {
 		NetworkManager.initialize()
 		ModItems.initialize()
-		DebufManager.initialize()
+		AbilityManager.initialize()
+		DebuffManager.initialize()
 	}
 }

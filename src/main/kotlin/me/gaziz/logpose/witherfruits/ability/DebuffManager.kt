@@ -1,5 +1,6 @@
-package me.gaziz.logpose.witherfruits
+package me.gaziz.logpose.witherfruits.ability
 
+import me.gaziz.logpose.witherfruits.PersistFruitsState
 import me.gaziz.logpose.witherfruits.network.NetworkManager
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents
@@ -8,7 +9,7 @@ import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.registry.entry.RegistryEntry
 
-object DebufManager {
+object DebuffManager {
     private val negativeEffect: (RegistryEntry<StatusEffect>) -> StatusEffectInstance = {
         StatusEffectInstance(
             it,
@@ -31,10 +32,7 @@ object DebufManager {
             val player = handler.player
             val state = PersistFruitsState().getPersistFruitsState(server)
             val fruit = state.getFruits()[player.uuidAsString]
-            NetworkManager.sendCanSwimS2C(
-                player,
-                fruit == null,
-            )
+            NetworkManager.sendCanSwimS2C(player,fruit == null)
         }
         ServerTickEvents.END_SERVER_TICK.register { server ->
             val state = PersistFruitsState().getPersistFruitsState(server)
@@ -44,15 +42,11 @@ object DebufManager {
                     if(player.isTouchingWater) {
                         player.setJumping(false)
                         hasNegativeEffects = true
-                        negativeEffects.forEach {
-                            player.addStatusEffect(it)
-                        }
+                        negativeEffects.forEach { player.addStatusEffect(it) }
                     } else {
                         if(hasNegativeEffects) {
                             hasNegativeEffects = false
-                            negativeEffects.forEach {
-                                player.removeStatusEffect(it.effectType)
-                            }
+                            negativeEffects.forEach { player.removeStatusEffect(it.effectType) }
                         }
                     }
                 }
