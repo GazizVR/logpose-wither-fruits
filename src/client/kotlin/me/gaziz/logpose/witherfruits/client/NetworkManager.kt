@@ -1,8 +1,10 @@
 package me.gaziz.logpose.witherfruits.client
 
 import me.gaziz.logpose.witherfruits.client.Initializer.canSwim
+import me.gaziz.logpose.witherfruits.client.Initializer.entityType
 import me.gaziz.logpose.witherfruits.network.AbilityEventPayload
 import me.gaziz.logpose.witherfruits.network.CanSwimPayload
+import me.gaziz.logpose.witherfruits.network.EntityTypePayload
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 
 object NetworkManager {
@@ -16,6 +18,13 @@ object NetworkManager {
         ) { payload, _ ->
             if (payload is CanSwimPayload) {
                 canSwim = payload.value
+            }
+        }
+        ClientPlayNetworking.registerGlobalReceiver(
+            EntityTypePayload.ID
+        ) { payload, _ ->
+            if(payload is EntityTypePayload) {
+                entityType = payload.value
             }
         }
     }

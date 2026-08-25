@@ -5,6 +5,7 @@ import me.gaziz.logpose.witherfruits.modifier.BuffManager
 import me.gaziz.logpose.witherfruits.modifier.Modifier
 import me.gaziz.logpose.witherfruits.modifier.createEffect
 import me.gaziz.logpose.witherfruits.modifier.createModifier
+import me.gaziz.logpose.witherfruits.network.NetworkManager
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.attribute.EntityAttribute
 import net.minecraft.entity.attribute.EntityAttributes
@@ -28,7 +29,6 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
         return createModifier(attr, value, prefix)
     }
     private val transformModifiers = listOf(
-//        createModifier(EntityAttributes.GENERIC_SCALE,-0.34),
         createModifier(EntityAttributes.PLAYER_BLOCK_BREAK_SPEED,-1.0),
         createModifier(EntityAttributes.GENERIC_ARMOR,4.0),
         //Damage
@@ -49,20 +49,25 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
     ) {
         BuffManager.removeModifiers(player)
         BuffManager.removeEffects(player)
+        if(currentForm == Form.Full) {
+            NetworkManager.sendEntityTypeS2C(player, null)
+            PlayerManager.removeDimension(player)
+        }
     }
 
+    private val transformEntityType = EntityType.OCELOT
     override fun toggleTransform(
         player: ServerPlayerEntity
     ) {
         if(currentForm == Form.Full){
             removeModifiers(player)
-            PlayerManager.removeDimension(player)
             currentForm = Form.Base
         } else {
             val hungerCost = 2
             if(player.hungerManager.foodLevel >= hungerCost) {
                 removeModifiers(player)
-                PlayerManager.setDimension(player, EntityType.OCELOT.dimensions)
+                PlayerManager.setDimension(player, transformEntityType.dimensions)
+                NetworkManager.sendEntityTypeS2C(player,transformEntityType)
                 BuffManager.setEffects(player.uuidAsString,transformEffects)
                 BuffManager.setModifiers(player.uuidAsString,transformModifiers)
                 player.hungerManager.foodLevel -= hungerCost

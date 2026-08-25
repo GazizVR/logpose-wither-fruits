@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 
 @Mixin(PlayerEntityRenderer::class)
-abstract class PlayerRenderer {
+class PlayerRenderer {
     private var entityCopy: LivingEntity? = null
     @Inject(
         method = ["render"],
