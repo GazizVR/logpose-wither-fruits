@@ -22,9 +22,12 @@ object NetworkManager {
         }
         ClientPlayNetworking.registerGlobalReceiver(
             EntityTypePayload.ID
-        ) { payload, _ ->
+        ) { payload, ctx ->
             if(payload is EntityTypePayload) {
-                entityType = payload.value
+                val value = payload.value
+                if(value != null) {
+                    entityType[ctx.player().uuidAsString] = value
+                }
             }
         }
     }

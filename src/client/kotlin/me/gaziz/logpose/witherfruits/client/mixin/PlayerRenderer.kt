@@ -16,6 +16,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 class PlayerRenderer {
     private var entityCopy: LivingEntity? = null
     @Inject(
+        method = ["renderArm"],
+        at = [At("HEAD")],
+        cancellable = true
+    )
+    fun onRenderArm(ci: CallbackInfo) {
+        if(Initializer.entityType[] != null) {
+            ci.cancel()
+        }
+    }
+    @Inject(
         method = ["render"],
         at = [At("HEAD")],
         cancellable = true

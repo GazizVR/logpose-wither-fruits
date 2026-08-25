@@ -5,7 +5,7 @@ import net.minecraft.entity.EntityType
 
 object Initializer : ClientModInitializer {
     var canSwim: Boolean = true
-    var entityType: EntityType<*>? = null
+    var entityType = mutableMapOf<String,EntityType<*>>()
 	override fun onInitializeClient() {
         NetworkManager.initialize()
         KeyBindManager.initialize()
