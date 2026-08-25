@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityType
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.network.packet.CustomPayload
+import kotlin.jvm.optionals.getOrNull
 
 data class EntityTypePayload(
     val value: EntityType<*>?,
@@ -15,8 +16,13 @@ data class EntityTypePayload(
             "${Initializer.MOD_ID}.player_model"
         )
         val CODEC: PacketCodec<ByteBuf, EntityTypePayload> = PacketCodecs.STRING.xmap(
-            { EntityTypePayload(EntityType.get(it).orElse(null)) },
-            { EntityType.getId(it.value).toString() }
+            {
+                val newValue = if(it.contains("null")) null else EntityType.get(it).getOrNull()
+                EntityTypePayload(newValue)
+            },
+            {
+                if(it.value == null) "null" else EntityType.getId(it.value).toString()
+            }
         )
     }
     override fun getId(): CustomPayload.Id<EntityTypePayload> {
