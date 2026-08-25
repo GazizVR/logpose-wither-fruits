@@ -4,6 +4,7 @@
     "package": "me.gaziz.logpose.witherfruits.client.mixin",
     "client": [
         "ClientPlayer",
-        "MouseButton"
+        "MouseButton",
+        "PlayerRenderer"
     ]
 }
