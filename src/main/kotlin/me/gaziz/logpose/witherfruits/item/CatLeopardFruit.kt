@@ -1,9 +1,11 @@
 package me.gaziz.logpose.witherfruits.item
 
+import me.gaziz.logpose.witherfruits.PlayerManager
 import me.gaziz.logpose.witherfruits.modifier.BuffManager
 import me.gaziz.logpose.witherfruits.modifier.Modifier
 import me.gaziz.logpose.witherfruits.modifier.createEffect
 import me.gaziz.logpose.witherfruits.modifier.createModifier
+import net.minecraft.entity.EntityType
 import net.minecraft.entity.attribute.EntityAttribute
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.effect.StatusEffects
@@ -26,7 +28,7 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
         return createModifier(attr, value, prefix)
     }
     private val transformModifiers = listOf(
-        createModifier(EntityAttributes.GENERIC_SCALE,-0.34),
+//        createModifier(EntityAttributes.GENERIC_SCALE,-0.34),
         createModifier(EntityAttributes.PLAYER_BLOCK_BREAK_SPEED,-1.0),
         createModifier(EntityAttributes.GENERIC_ARMOR,4.0),
         //Damage
@@ -54,11 +56,13 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
     ) {
         if(currentForm == Form.Full){
             removeModifiers(player)
+            PlayerManager.removeDimension(player)
             currentForm = Form.Base
         } else {
             val hungerCost = 2
             if(player.hungerManager.foodLevel >= hungerCost) {
                 removeModifiers(player)
+                PlayerManager.setDimension(player, EntityType.OCELOT.dimensions)
                 BuffManager.setEffects(player.uuidAsString,transformEffects)
                 BuffManager.setModifiers(player.uuidAsString,transformModifiers)
                 player.hungerManager.foodLevel -= hungerCost
