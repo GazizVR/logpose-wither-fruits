@@ -1,5 +1,7 @@
-package me.gaziz.logpose.witherfruits.item
+package me.gaziz.logpose.witherfruits.fruit.zoan
 
+import me.gaziz.logpose.witherfruits.fruit.ModFruits
+import me.gaziz.logpose.witherfruits.fruit.WitherFruit
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.Rarity
 
@@ -8,7 +10,7 @@ abstract class ZoanFruit(
 ): WitherFruit(
     path = path,
     rarity = Rarity.RARE,
-    tooltipKey = ModItems.zoanTooltipKey
+    tooltipKey = ModFruits.zoanTooltipKey
 ) {
     enum class Form { Base, Full, Hybrid }
     abstract fun toggleTransform(player: ServerPlayerEntity)

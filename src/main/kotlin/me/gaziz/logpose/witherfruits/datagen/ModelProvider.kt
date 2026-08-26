@@ -1,6 +1,6 @@
 package me.gaziz.logpose.witherfruits.datagen
 
-import me.gaziz.logpose.witherfruits.item.ModItems
+import me.gaziz.logpose.witherfruits.fruit.ModFruits
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.data.client.BlockStateModelGenerator
@@ -17,8 +17,8 @@ class ModelProvider(
     override fun generateItemModels(
         itemModelGenerator: ItemModelGenerator
     ) {
-        itemModelGenerator.register(ModItems.rubberFruit, Models.GENERATED)
-        itemModelGenerator.register(ModItems.catLeopardFruit, Models.GENERATED)
-        itemModelGenerator.register(ModItems.fireFruit, Models.GENERATED)
+        itemModelGenerator.register(ModFruits.rubberFruit, Models.GENERATED)
+        itemModelGenerator.register(ModFruits.catLeopardFruit, Models.GENERATED)
+        itemModelGenerator.register(ModFruits.flameFruit, Models.GENERATED)
     }
 }

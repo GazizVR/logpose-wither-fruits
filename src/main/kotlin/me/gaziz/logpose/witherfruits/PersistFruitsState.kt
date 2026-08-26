@@ -1,7 +1,7 @@
 package me.gaziz.logpose.witherfruits
 
 import com.mojang.serialization.Codec
-import me.gaziz.logpose.witherfruits.item.WitherFruit
+import me.gaziz.logpose.witherfruits.fruit.WitherFruit
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtOps
 import net.minecraft.registry.Registries

@@ -1,7 +1,7 @@
 package me.gaziz.logpose.witherfruits.network
 
 import me.gaziz.logpose.witherfruits.PersistFruitsState
-import me.gaziz.logpose.witherfruits.item.ModItems
+import me.gaziz.logpose.witherfruits.fruit.ModFruits
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.entity.EntityType
@@ -49,10 +49,10 @@ object NetworkManager {
                     .getPersistFruitsState(ctx.server())
                     .getFruits()[ctx.player().uuidAsString]
                     ?.let {
-                        if(it == ModItems.catLeopardFruit) {
+                        if(it == ModFruits.catLeopardFruit) {
                             when(payload.abilityNumber) {
-                                1 -> ModItems.catLeopardFruit.toggleTransform(ctx.player())
-                                2 -> ModItems.catLeopardFruit.toggleHybridForm(ctx.player())
+                                1 -> ModFruits.catLeopardFruit.toggleTransform(ctx.player())
+                                2 -> ModFruits.catLeopardFruit.toggleHybridForm(ctx.player())
                             }
                         } else {
                             ctx.player().sendMessageToClient(

@@ -1,6 +1,9 @@
-package me.gaziz.logpose.witherfruits.item
+package me.gaziz.logpose.witherfruits.fruit
 
 import me.gaziz.logpose.witherfruits.Initializer
+import me.gaziz.logpose.witherfruits.fruit.logia.LogiaFruit
+import me.gaziz.logpose.witherfruits.fruit.paramecia.ParameciaFruit
+import me.gaziz.logpose.witherfruits.fruit.zoan.CatLeopardFruit
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.item.Item
@@ -12,7 +15,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 
-object ModItems {
+object ModFruits {
     private val itemGroupKey = RegistryKey.of(
         RegistryKeys.ITEM_GROUP,
         Initializer.MOD_NAME_ID
@@ -45,7 +48,7 @@ object ModItems {
 
     val rubberFruit = ParameciaFruit("rubber_fruit")
     val catLeopardFruit = CatLeopardFruit()
-    val fireFruit = LogiaFruit("fire_fruit")
+    val flameFruit = LogiaFruit("flame_fruit")
 
     fun initialize() {
         Registry.register(
@@ -55,6 +58,6 @@ object ModItems {
         )
         register(rubberFruit.id, rubberFruit)
         register(catLeopardFruit.id, catLeopardFruit)
-        register(fireFruit.id, fireFruit)
+        register(flameFruit.id, flameFruit)
     }
 }

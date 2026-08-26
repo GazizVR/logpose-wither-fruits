@@ -1,6 +1,6 @@
 package me.gaziz.logpose.witherfruits
 
-import me.gaziz.logpose.witherfruits.item.ModItems
+import me.gaziz.logpose.witherfruits.fruit.ModFruits
 import me.gaziz.logpose.witherfruits.modifier.BuffManager
 import me.gaziz.logpose.witherfruits.modifier.DebuffManager
 import me.gaziz.logpose.witherfruits.network.NetworkManager
@@ -13,7 +13,7 @@ object Initializer : ModInitializer {
 	fun id(path: String): Identifier = Identifier.of(MOD_ID, path)
 	override fun onInitialize() {
 		NetworkManager.initialize()
-		ModItems.initialize()
+		ModFruits.initialize()
 		PlayerManager.initialize()
 		BuffManager.initialize()
 		DebuffManager.initialize()

@@ -1,4 +1,4 @@
-package me.gaziz.logpose.witherfruits.item
+package me.gaziz.logpose.witherfruits.fruit.zoan
 
 import me.gaziz.logpose.witherfruits.PlayerManager
 import me.gaziz.logpose.witherfruits.modifier.BuffManager

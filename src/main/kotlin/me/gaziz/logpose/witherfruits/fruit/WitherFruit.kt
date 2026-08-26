@@ -1,4 +1,4 @@
-package me.gaziz.logpose.witherfruits.item
+package me.gaziz.logpose.witherfruits.fruit
 
 import me.gaziz.logpose.witherfruits.Initializer
 import me.gaziz.logpose.witherfruits.PersistFruitsState
