@@ -29,11 +29,11 @@ object NetworkManager {
                 if(value != null) {
                     val entity = value.create(ctx.player().world)
                     if(entity is LivingEntity) {
-                        entityCopies[ctx.player().uuidAsString] = entity
+                        entityCopies[payload.uuidStr] = entity
                     }
                 } else {
-                    entityCopies[ctx.player().uuidAsString]?.discard()
-                    entityCopies.remove(ctx.player().uuidAsString)
+                    entityCopies[payload.uuidStr]?.discard()
+                    entityCopies.remove(payload.uuidStr)
                 }
             }
         }
