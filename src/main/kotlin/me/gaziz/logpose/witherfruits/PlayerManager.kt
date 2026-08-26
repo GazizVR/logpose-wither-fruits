@@ -3,9 +3,23 @@ package me.gaziz.logpose.witherfruits
 import me.gaziz.logpose.witherfruits.network.NetworkManager
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents
 import net.minecraft.entity.EntityType
+import net.minecraft.entity.damage.DamageType
+import net.minecraft.registry.tag.TagKey
 import net.minecraft.server.network.ServerPlayerEntity
 
 object PlayerManager {
+    private val immuneDamageTypes = mutableMapOf<String,Set<TagKey<DamageType>>>()
+    fun getDamageTypes(key: String): Set<TagKey<DamageType>>? = immuneDamageTypes[key]
+    fun setDamageTypes(
+        key: String,
+        value: Set<TagKey<DamageType>>
+    ) {
+        immuneDamageTypes[key] = value
+    }
+    fun removeDamageTypes(key: String) {
+        immuneDamageTypes.remove(key)
+    }
+
     private val entityTypes = mutableMapOf<String, EntityType<*>>()
     fun setEntityType(
         key: String,

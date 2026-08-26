@@ -1,6 +1,7 @@
 package me.gaziz.logpose.witherfruits.modifier
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
+import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.server.network.ServerPlayerEntity
 
@@ -11,7 +12,7 @@ object BuffManager {
     ){
         effects[key] = value
     }
-    fun removeEffects(player: ServerPlayerEntity){
+    fun removeEffects(player: LivingEntity) {
         effects[player.uuidAsString]?.forEach {
             player.removeStatusEffect(it.effectType)
         }

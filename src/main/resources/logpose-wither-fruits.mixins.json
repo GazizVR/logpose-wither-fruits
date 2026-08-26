@@ -1,0 +1,6 @@
+{
+  "required": true,
+  "compatibilityLevel": "JAVA_21",
+  "package": "me.gaziz.logpose.witherfruits.mixin",
+  "mixins": ["PlayerDamage"]
+}

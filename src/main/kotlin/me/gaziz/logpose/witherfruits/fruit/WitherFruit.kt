@@ -59,7 +59,7 @@ abstract class WitherFruit(
             tooltip.add(Text.translatable(tooltipKey))
         }
     }
-
+    protected open fun onEat(user: LivingEntity) {}
     override fun finishUsing(
         stack: ItemStack,
         world: World,
@@ -70,6 +70,7 @@ abstract class WitherFruit(
             world.server != null &&
             user is ServerPlayerEntity
         ) {
+            onEat(user)
             val state = PersistFruitsState().getPersistFruitsState(world.server!!)
             val fruits = state.getFruits()
             val uuid = user.uuidAsString
@@ -77,7 +78,7 @@ abstract class WitherFruit(
             if(fruit != null) {
                 stack.decrement(1)
                 user.removeStatusEffect(StatusEffects.NAUSEA)
-                user.damage(user.world.damageSources.wither(),user.health)
+                user.damage(user.world.damageSources.wither(),user.maxHealth)
                 users.remove(uuid)
                 state.removeFruit(uuid)
             } else {
