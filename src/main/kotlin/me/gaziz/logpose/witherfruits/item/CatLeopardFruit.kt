@@ -50,7 +50,13 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
         BuffManager.removeModifiers(player)
         BuffManager.removeEffects(player)
         if(currentForm == Form.Full) {
-            NetworkManager.sendEntityTypeS2C(player, null)
+            player.server.playerManager.playerList.forEach {
+                NetworkManager.sendEntityTypeS2C(
+                    it,
+                    player.uuidAsString,
+                    null
+                )
+            }
             PlayerManager.removeDimension(player)
         }
     }
@@ -67,7 +73,13 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
             if(player.hungerManager.foodLevel >= hungerCost) {
                 removeModifiers(player)
                 PlayerManager.setDimension(player, transformEntityType.dimensions)
-                NetworkManager.sendEntityTypeS2C(player,transformEntityType)
+                player.server.playerManager.playerList.forEach {
+                    NetworkManager.sendEntityTypeS2C(
+                        it,
+                        player.uuidAsString,
+                        transformEntityType
+                    )
+                }
                 BuffManager.setEffects(player.uuidAsString,transformEffects)
                 BuffManager.setModifiers(player.uuidAsString,transformModifiers)
                 player.hungerManager.foodLevel -= hungerCost

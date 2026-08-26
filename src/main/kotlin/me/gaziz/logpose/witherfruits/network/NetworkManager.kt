@@ -21,9 +21,10 @@ object NetworkManager {
     }
     fun sendEntityTypeS2C(
         player: ServerPlayerEntity,
+        uuidStr: String,
         entityType: EntityType<*>?,
     ) {
-        val payload = EntityTypePayload(player.uuidAsString,entityType)
+        val payload = EntityTypePayload(uuidStr,entityType)
         ServerPlayNetworking.send(player,payload)
     }
     fun initialize() {
