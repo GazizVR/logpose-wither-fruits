@@ -2,11 +2,11 @@ package me.gaziz.logpose.witherfruits.client.mixin
 
 import me.gaziz.logpose.witherfruits.client.Initializer
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.model.ModelPart
 import net.minecraft.client.network.AbstractClientPlayerEntity
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.entity.PlayerEntityRenderer
 import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.entity.LivingEntity
 import org.spongepowered.asm.mixin.Mixin
 import org.spongepowered.asm.mixin.injection.At
 import org.spongepowered.asm.mixin.injection.Inject
@@ -14,14 +14,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 
 @Mixin(PlayerEntityRenderer::class)
 class PlayerRenderer {
-    private var entityCopy: LivingEntity? = null
     @Inject(
         method = ["renderArm"],
         at = [At("HEAD")],
         cancellable = true
     )
-    fun onRenderArm(ci: CallbackInfo) {
-        if(Initializer.entityType[] != null) {
+    fun onRenderArm(
+        matrices: MatrixStack,
+        vertexConsumers: VertexConsumerProvider,
+        light: Int,
+        player: AbstractClientPlayerEntity,
+        arm: ModelPart,
+        sleeve: ModelPart,
+        ci: CallbackInfo
+    ) {
+        if(Initializer.entityCopies[player.uuidAsString] != null) {
             ci.cancel()
         }
     }
@@ -39,16 +46,8 @@ class PlayerRenderer {
         light: Int,
         ci: CallbackInfo
     ) {
-        if(Initializer.entityType == null) return
-        if(
-            entityCopy?.type != Initializer.entityType ||
-            entityCopy == null ||
-            entityCopy?.world == null
-        ) {
-            val world = player.world
-            entityCopy = Initializer.entityType?.create(world) as LivingEntity?
-        }
-        entityCopy?.let { entity ->
+        val entityCopy = Initializer.entityCopies[player.uuidAsString] ?: return
+        entityCopy.let { entity ->
             entity.copyPositionAndRotation(player)
             entity.bodyYaw = player.bodyYaw
             entity.headYaw = player.headYaw
@@ -68,7 +67,7 @@ class PlayerRenderer {
                 vertexConsumerProvider,
                 light
             )
+            ci.cancel()
         }
-        ci.cancel()
     }
 }

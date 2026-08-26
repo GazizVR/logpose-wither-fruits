@@ -1,11 +1,12 @@
 package me.gaziz.logpose.witherfruits.client
 
 import me.gaziz.logpose.witherfruits.client.Initializer.canSwim
-import me.gaziz.logpose.witherfruits.client.Initializer.entityType
+import me.gaziz.logpose.witherfruits.client.Initializer.entityCopies
 import me.gaziz.logpose.witherfruits.network.AbilityEventPayload
 import me.gaziz.logpose.witherfruits.network.CanSwimPayload
 import me.gaziz.logpose.witherfruits.network.EntityTypePayload
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
+import net.minecraft.entity.LivingEntity
 
 object NetworkManager {
     fun sendAbilityEventC2S(abilityNumber: Int) {
@@ -26,7 +27,13 @@ object NetworkManager {
             if(payload is EntityTypePayload) {
                 val value = payload.value
                 if(value != null) {
-                    entityType[ctx.player().uuidAsString] = value
+                    val entity = value.create(ctx.player().world)
+                    if(entity is LivingEntity) {
+                        entityCopies[ctx.player().uuidAsString] = entity
+                    }
+                } else {
+                    entityCopies[ctx.player().uuidAsString]?.discard()
+                    entityCopies.remove(ctx.player().uuidAsString)
                 }
             }
         }
