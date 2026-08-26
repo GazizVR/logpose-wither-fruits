@@ -47,6 +47,7 @@ abstract class WitherFruit(
         )
 ) {
     val id: Identifier = Initializer.id(path)
+    protected val users = mutableSetOf<String>()
 
     override fun appendTooltip(
         stack: ItemStack,
@@ -77,8 +78,10 @@ abstract class WitherFruit(
                 stack.decrement(1)
                 user.removeStatusEffect(StatusEffects.NAUSEA)
                 user.damage(user.world.damageSources.wither(),user.health)
+                users.remove(uuid)
                 state.removeFruit(uuid)
             } else {
+                users.add(uuid)
                 state.setFruit(uuid,this)
             }
             NetworkManager.sendCanSwimS2C(

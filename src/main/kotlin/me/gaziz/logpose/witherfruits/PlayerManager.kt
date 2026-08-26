@@ -8,6 +8,12 @@ import net.minecraft.server.network.ServerPlayerEntity
 object PlayerManager {
     private val entityTypes = mutableMapOf<String, EntityType<*>>()
     fun setEntityType(
+        key: String,
+        value: EntityType<*>
+    ) {
+        entityTypes[key] = value
+    }
+    fun setEntityTypeAndSend(
         player: ServerPlayerEntity,
         value: EntityType<*>
     ) {

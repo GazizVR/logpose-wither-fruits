@@ -11,7 +11,6 @@ abstract class ZoanFruit(
     tooltipKey = ModItems.zoanTooltipKey
 ) {
     enum class Form { Base, Full, Hybrid }
-    abstract var currentForm: Form
     abstract fun toggleTransform(player: ServerPlayerEntity)
     abstract fun toggleHybridForm(player: ServerPlayerEntity)
 }

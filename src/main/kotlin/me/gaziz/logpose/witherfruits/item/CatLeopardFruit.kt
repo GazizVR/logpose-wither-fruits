@@ -15,7 +15,28 @@ import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.text.Text
 
 class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
-    override var currentForm: Form = Form.Base
+    private val userForms = mutableMapOf<String,Form>()
+    fun getUserForm(key: String): Form? {
+        val form = userForms[key]
+        if(form == null && users.contains(key)) {
+            userForms[key] = Form.Base
+            return Form.Base
+        }
+        return form
+    }
+
+    private val fullTransformEntityType = EntityType.OCELOT
+
+    init {
+        userForms.forEach { (key, form) ->
+            if(form == Form.Full) {
+                PlayerManager.setEntityType(
+                    key,
+                    fullTransformEntityType
+                )
+            }
+        }
+    }
 
     private val transformEffects = listOf(
         createEffect(StatusEffects.NIGHT_VISION),
@@ -50,34 +71,34 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
     ) {
         BuffManager.removeModifiers(player)
         BuffManager.removeEffects(player)
-        if(currentForm == Form.Full) {
+        if(getUserForm(player.uuidAsString) == Form.Full) {
             PlayerManager.removeEntityType(player)
         }
     }
 
-    private val transformEntityType = EntityType.OCELOT
     override fun toggleTransform(
         player: ServerPlayerEntity
     ) {
-        if(currentForm == Form.Full){
+        val key = player.uuidAsString
+        if(getUserForm(key) == Form.Full){
             removeModifiers(player)
-            currentForm = Form.Base
+            userForms[key] = Form.Base
         } else {
             val hungerCost = 2
             if(player.hungerManager.foodLevel >= hungerCost) {
                 removeModifiers(player)
-                PlayerManager.setEntityType(player, EntityType.OCELOT)
+                PlayerManager.setEntityTypeAndSend(player, fullTransformEntityType)
                 player.server.playerManager.playerList.forEach {
                     NetworkManager.sendEntityTypeS2C(
                         it,
                         player.uuidAsString,
-                        transformEntityType
+                        fullTransformEntityType
                     )
                 }
                 BuffManager.setEffects(player.uuidAsString,transformEffects)
                 BuffManager.setModifiers(player.uuidAsString,transformModifiers)
                 player.hungerManager.foodLevel -= hungerCost
-                currentForm = Form.Full
+                userForms[key] = Form.Full
             } else {
                 player.sendMessage(Text.literal("Not enough satiety"),true)
             }
@@ -114,9 +135,10 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
     override fun toggleHybridForm(
         player: ServerPlayerEntity
     ) {
-        if(currentForm == Form.Hybrid) {
+        val key = player.uuidAsString
+        if(getUserForm(key) == Form.Hybrid) {
             removeModifiers(player)
-            currentForm = Form.Base
+            userForms[key] = Form.Base
         } else {
             val hungerCost = 4
             if(player.hungerManager.foodLevel >= hungerCost) {
@@ -124,7 +146,7 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
                 BuffManager.setEffects(player.uuidAsString,hybridEffects)
                 BuffManager.setModifiers(player.uuidAsString,hybridModifiers)
                 player.hungerManager.foodLevel -= hungerCost
-                currentForm = Form.Hybrid
+                userForms[key] = Form.Hybrid
             } else {
                 player.sendMessage(Text.literal("Not enough satiety"),true)
             }
