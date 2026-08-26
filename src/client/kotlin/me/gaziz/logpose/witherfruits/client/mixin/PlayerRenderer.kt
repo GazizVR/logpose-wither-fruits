@@ -54,7 +54,10 @@ class PlayerRenderer {
             entity.prevBodyYaw = player.prevBodyYaw
             entity.prevHeadYaw = player.prevHeadYaw
             entity.age = player.age
-            entity.limbAnimator.speed = player.limbAnimator.speed
+            entity.limbAnimator.updateLimbs(
+                player.limbAnimator.speed/3,
+                1f
+            )
             entity.pose = player.pose
 
             val dispatcher = MinecraftClient.getInstance().entityRenderDispatcher
