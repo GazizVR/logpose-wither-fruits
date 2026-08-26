@@ -4,7 +4,7 @@ import me.gaziz.logpose.witherfruits.fruit.ModFruits
 import me.gaziz.logpose.witherfruits.fruit.WitherFruit
 import net.minecraft.util.Rarity
 
-class LogiaFruit(path: String): WitherFruit(
+abstract class LogiaFruit(path: String): WitherFruit(
     path = path,
     rarity = Rarity.EPIC,
     tooltipKey = ModFruits.logiaTooltipKey

@@ -1,7 +1,7 @@
 package me.gaziz.logpose.witherfruits.fruit
 
 import me.gaziz.logpose.witherfruits.Initializer
-import me.gaziz.logpose.witherfruits.fruit.logia.LogiaFruit
+import me.gaziz.logpose.witherfruits.fruit.logia.FlameFruit
 import me.gaziz.logpose.witherfruits.fruit.paramecia.ParameciaFruit
 import me.gaziz.logpose.witherfruits.fruit.zoan.CatLeopardFruit
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
@@ -48,7 +48,7 @@ object ModFruits {
 
     val rubberFruit = ParameciaFruit("rubber_fruit")
     val catLeopardFruit = CatLeopardFruit()
-    val flameFruit = LogiaFruit("flame_fruit")
+    val flameFruit = FlameFruit()
 
     fun initialize() {
         Registry.register(
