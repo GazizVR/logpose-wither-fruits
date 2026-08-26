@@ -1,21 +1,45 @@
 package me.gaziz.logpose.witherfruits
 
-import net.minecraft.entity.EntityDimensions
-import net.minecraft.entity.EntityPose
-import net.minecraft.entity.player.PlayerEntity
+import me.gaziz.logpose.witherfruits.network.NetworkManager
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents
+import net.minecraft.entity.EntityType
+import net.minecraft.server.network.ServerPlayerEntity
 
 object PlayerManager {
-    private val dimensions = mutableMapOf<String, EntityDimensions>()
-    fun getDimension(key: String): EntityDimensions? = dimensions[key]
-    fun setDimension(
-        player: PlayerEntity,
-        value: EntityDimensions
+    private val entityTypes = mutableMapOf<String, EntityType<*>>()
+    fun setEntityType(
+        player: ServerPlayerEntity,
+        value: EntityType<*>
     ) {
-        dimensions[player.uuidAsString] = value
-        player.pose = EntityPose.ROARING
+        val key = player.uuidAsString
+        entityTypes[key] = value
+        player.server.playerManager.playerList.forEach {
+            NetworkManager.sendEntityTypeS2C(
+                player = it,
+                uuidStr = key,
+                entityType = value
+            )
+        }
     }
-    fun removeDimension(player: PlayerEntity) {
-        dimensions.remove(player.uuidAsString)
-        player.pose = EntityPose.ROARING
+    fun removeEntityType(
+        player: ServerPlayerEntity
+    ) {
+        val key = player.uuidAsString
+        entityTypes.remove(key)
+        player.server.playerManager.playerList.forEach {
+            NetworkManager.sendEntityTypeS2C(
+                player = it,
+                uuidStr = key,
+                entityType = null
+            )
+        }
+    }
+    fun initialize() {
+        ServerPlayConnectionEvents.JOIN.register { h, _, _ ->
+            val player = h.player
+            entityTypes.forEach { (k, v) ->
+                NetworkManager.sendEntityTypeS2C(player,k,v)
+            }
+        }
     }
 }

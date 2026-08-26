@@ -32,7 +32,6 @@
 		]
 	},
 	"mixins": [
-		"logpose-wither-fruits.mixins.json",
 		{
 			"config": "logpose-wither-fruits.client.mixins.json",
 			"environment": "client"

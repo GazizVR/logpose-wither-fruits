@@ -29,6 +29,7 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
         return createModifier(attr, value, prefix)
     }
     private val transformModifiers = listOf(
+        createModifier(EntityAttributes.GENERIC_SCALE,-0.5),
         createModifier(EntityAttributes.PLAYER_BLOCK_BREAK_SPEED,-1.0),
         createModifier(EntityAttributes.GENERIC_ARMOR,4.0),
         //Damage
@@ -50,14 +51,7 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
         BuffManager.removeModifiers(player)
         BuffManager.removeEffects(player)
         if(currentForm == Form.Full) {
-            player.server.playerManager.playerList.forEach {
-                NetworkManager.sendEntityTypeS2C(
-                    it,
-                    player.uuidAsString,
-                    null
-                )
-            }
-            PlayerManager.removeDimension(player)
+            PlayerManager.removeEntityType(player)
         }
     }
 
@@ -72,7 +66,7 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
             val hungerCost = 2
             if(player.hungerManager.foodLevel >= hungerCost) {
                 removeModifiers(player)
-                PlayerManager.setDimension(player, transformEntityType.dimensions)
+                PlayerManager.setEntityType(player, EntityType.OCELOT)
                 player.server.playerManager.playerList.forEach {
                     NetworkManager.sendEntityTypeS2C(
                         it,
