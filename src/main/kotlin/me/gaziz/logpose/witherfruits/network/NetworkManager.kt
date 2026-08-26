@@ -23,7 +23,7 @@ object NetworkManager {
         player: ServerPlayerEntity,
         entityType: EntityType<*>?,
     ) {
-        val payload = EntityTypePayload(entityType)
+        val payload = EntityTypePayload(player.uuidAsString,entityType)
         ServerPlayNetworking.send(player,payload)
     }
     fun initialize() {
