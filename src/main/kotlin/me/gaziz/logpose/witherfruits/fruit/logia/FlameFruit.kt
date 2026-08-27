@@ -19,12 +19,12 @@ class FlameFruit: LogiaFruit("flame_fruit") {
         DamageTypeTags.IS_LIGHTNING
     )
 
-    private val firstAbilityCooldown = mutableMapOf<String, Int>()
+    private val firstCooldown = mutableMapOf<String, Int>()
     override fun firstAbility(user: ServerPlayerEntity){
-        val cooldown = firstAbilityCooldown[user.uuidAsString] ?: 0
+        val cooldown = firstCooldown[user.uuidAsString] ?: 0
         val currentTick = user.server.ticks
         if(currentTick < cooldown) return
-        firstAbilityCooldown[user.uuidAsString] = currentTick + (SharedConstants.TICKS_PER_SECOND *3)
+        firstCooldown[user.uuidAsString] = currentTick + (SharedConstants.TICKS_PER_SECOND*3)
         val smallFireball = SmallFireballEntity(
             user.world,
             user,
@@ -34,7 +34,12 @@ class FlameFruit: LogiaFruit("flame_fruit") {
         user.world.spawnEntity(smallFireball)
     }
 
+    private val secondCooldown = mutableMapOf<String, Int>()
     override fun secondAbility(user: ServerPlayerEntity) {
+        val cooldown = secondCooldown[user.uuidAsString] ?: 0
+        val currentTick = user.server.ticks
+        if(currentTick < cooldown) return
+        secondCooldown[user.uuidAsString] = currentTick + (SharedConstants.TICKS_PER_SECOND*6)
         val fireball = FireballEntity(
             user.world,
             user,
