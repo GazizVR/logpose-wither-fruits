@@ -1,7 +1,7 @@
 package me.gaziz.logpose.witherfruits.network
 
 import me.gaziz.logpose.witherfruits.PersistFruitsState
-import me.gaziz.logpose.witherfruits.fruit.ModFruits
+import me.gaziz.logpose.witherfruits.fruit.zoan.ZoanFruit
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.entity.EntityType
@@ -49,16 +49,19 @@ object NetworkManager {
                     .getPersistFruitsState(ctx.server())
                     .getFruits()[ctx.player().uuidAsString]
                     ?.let {
-                        if(it == ModFruits.catLeopardFruit) {
-                            when(payload.abilityNumber) {
-                                1 -> ModFruits.catLeopardFruit.toggleTransform(ctx.player())
-                                2 -> ModFruits.catLeopardFruit.toggleHybridForm(ctx.player())
+                        when {
+                            it is ZoanFruit -> {
+                                when(payload.abilityNumber) {
+                                    1 -> it.toggleTransform(ctx.player())
+                                    2 -> it.toggleHybridForm(ctx.player())
+                                }
                             }
-                        } else {
-                            ctx.player().sendMessageToClient(
-                                Text.literal("Not implemented yet"),
-                                true
-                            )
+                            else -> {
+                                ctx.player().sendMessageToClient(
+                                    Text.literal("Not implemented yet"),
+                                    true
+                                )
+                            }
                         }
                     }
             }

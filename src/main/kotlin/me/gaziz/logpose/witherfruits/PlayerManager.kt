@@ -8,11 +8,11 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.server.network.ServerPlayerEntity
 
 object PlayerManager {
-    private val immuneDamageTypes = mutableMapOf<String,Set<TagKey<DamageType>>>()
-    fun getDamageTypes(key: String): Set<TagKey<DamageType>>? = immuneDamageTypes[key]
+    private val immuneDamageTypes = mutableMapOf<String,List<TagKey<DamageType>>>()
+    fun getDamageTypes(key: String): List<TagKey<DamageType>>? = immuneDamageTypes[key]
     fun setDamageTypes(
         key: String,
-        value: Set<TagKey<DamageType>>
+        value: List<TagKey<DamageType>>
     ) {
         immuneDamageTypes[key] = value
     }
@@ -21,12 +21,6 @@ object PlayerManager {
     }
 
     private val entityTypes = mutableMapOf<String, EntityType<*>>()
-    fun setEntityType(
-        key: String,
-        value: EntityType<*>
-    ) {
-        entityTypes[key] = value
-    }
     fun setEntityTypeAndSend(
         player: ServerPlayerEntity,
         value: EntityType<*>

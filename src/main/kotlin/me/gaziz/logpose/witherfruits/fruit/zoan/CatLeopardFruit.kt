@@ -1,44 +1,18 @@
 package me.gaziz.logpose.witherfruits.fruit.zoan
 
-import me.gaziz.logpose.witherfruits.PlayerManager
-import me.gaziz.logpose.witherfruits.modifier.BuffManager
 import me.gaziz.logpose.witherfruits.modifier.Modifier
 import me.gaziz.logpose.witherfruits.modifier.createEffect
 import me.gaziz.logpose.witherfruits.modifier.createModifier
-import me.gaziz.logpose.witherfruits.network.NetworkManager
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.attribute.EntityAttribute
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.registry.entry.RegistryEntry
-import net.minecraft.server.network.ServerPlayerEntity
-import net.minecraft.text.Text
 
 class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
-    private val userForms = mutableMapOf<String,Form>()
-    fun getUserForm(key: String): Form? {
-        val form = userForms[key]
-        if(form == null && users.contains(key)) {
-            userForms[key] = Form.Base
-            return Form.Base
-        }
-        return form
-    }
-
-    private val fullTransformEntityType = EntityType.OCELOT
-
-    init {
-        userForms.forEach { (key, form) ->
-            if(form == Form.Full) {
-                PlayerManager.setEntityType(
-                    key,
-                    fullTransformEntityType
-                )
-            }
-        }
-    }
-
-    private val transformEffects = listOf(
+    override val transformHungerCost: Int = 2
+    override val transformEntityType = EntityType.OCELOT
+    override val transformEffects = listOf(
         createEffect(StatusEffects.NIGHT_VISION),
         createEffect(StatusEffects.HUNGER),
     )
@@ -49,7 +23,7 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
         val prefix = "leopard"
         return createModifier(attr, value, prefix)
     }
-    private val transformModifiers = listOf(
+    override val transformModifiers = listOf(
         createModifier(EntityAttributes.GENERIC_SCALE,-0.5),
         createModifier(EntityAttributes.PLAYER_BLOCK_BREAK_SPEED,-1.0),
         createModifier(EntityAttributes.GENERIC_ARMOR,4.0),
@@ -66,50 +40,12 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
         createModifier(EntityAttributes.GENERIC_FALL_DAMAGE_MULTIPLIER,-0.25),
     )
 
-    private fun removeModifiers(
-        player: ServerPlayerEntity
-    ) {
-        BuffManager.removeModifiers(player)
-        BuffManager.removeEffects(player)
-        if(getUserForm(player.uuidAsString) == Form.Full) {
-            PlayerManager.removeEntityType(player)
-        }
-    }
-
-    override fun toggleTransform(
-        player: ServerPlayerEntity
-    ) {
-        val key = player.uuidAsString
-        if(getUserForm(key) == Form.Full){
-            removeModifiers(player)
-            userForms[key] = Form.Base
-        } else {
-            val hungerCost = 2
-            if(player.hungerManager.foodLevel >= hungerCost) {
-                removeModifiers(player)
-                PlayerManager.setEntityTypeAndSend(player, fullTransformEntityType)
-                player.server.playerManager.playerList.forEach {
-                    NetworkManager.sendEntityTypeS2C(
-                        it,
-                        player.uuidAsString,
-                        fullTransformEntityType
-                    )
-                }
-                BuffManager.setEffects(player.uuidAsString,transformEffects)
-                BuffManager.setModifiers(player.uuidAsString,transformModifiers)
-                player.hungerManager.foodLevel -= hungerCost
-                userForms[key] = Form.Full
-            } else {
-                player.sendMessage(Text.literal("Not enough satiety"),true)
-            }
-        }
-    }
-
-    private val hybridEffects = listOf(
+    override val hybridHungerCost: Int = 4
+    override val hybridEffects = listOf(
         createEffect(StatusEffects.NIGHT_VISION),
         createEffect(StatusEffects.HUNGER,1)
     )
-    private val hybridModifiers = listOf(
+    override val hybridModifiers = listOf(
         createModifier(EntityAttributes.GENERIC_SCALE,0.67),
         createModifier(EntityAttributes.GENERIC_STEP_HEIGHT,0.4),
         createModifier(EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE,0.5),
@@ -131,25 +67,4 @@ class CatLeopardFruit: ZoanFruit("cat_leopard_fruit") {
         createModifier(EntityAttributes.GENERIC_SAFE_FALL_DISTANCE,1.25),
         createModifier(EntityAttributes.GENERIC_FALL_DAMAGE_MULTIPLIER,-0.125),
     )
-
-    override fun toggleHybridForm(
-        player: ServerPlayerEntity
-    ) {
-        val key = player.uuidAsString
-        if(getUserForm(key) == Form.Hybrid) {
-            removeModifiers(player)
-            userForms[key] = Form.Base
-        } else {
-            val hungerCost = 4
-            if(player.hungerManager.foodLevel >= hungerCost) {
-                removeModifiers(player)
-                BuffManager.setEffects(player.uuidAsString,hybridEffects)
-                BuffManager.setModifiers(player.uuidAsString,hybridModifiers)
-                player.hungerManager.foodLevel -= hungerCost
-                userForms[key] = Form.Hybrid
-            } else {
-                player.sendMessage(Text.literal("Not enough satiety"),true)
-            }
-        }
-    }
 }

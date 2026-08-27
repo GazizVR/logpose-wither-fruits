@@ -47,7 +47,6 @@ abstract class WitherFruit(
         )
 ) {
     val id: Identifier = Initializer.id(path)
-    protected val users = mutableSetOf<String>()
 
     override fun appendTooltip(
         stack: ItemStack,
@@ -59,7 +58,7 @@ abstract class WitherFruit(
             tooltip.add(Text.translatable(tooltipKey))
         }
     }
-    protected open fun onEat(user: LivingEntity) {}
+    protected open fun onEat(user: ServerPlayerEntity) {}
     override fun finishUsing(
         stack: ItemStack,
         world: World,
@@ -72,18 +71,19 @@ abstract class WitherFruit(
         ) {
             onEat(user)
             val state = PersistFruitsState().getPersistFruitsState(world.server!!)
-            val fruits = state.getFruits()
-            val uuid = user.uuidAsString
-            val fruit = fruits[uuid]
+            val key = user.uuidAsString
+            val fruit = state.getFruits()[key]
             if(fruit != null) {
                 stack.decrement(1)
-                user.removeStatusEffect(StatusEffects.NAUSEA)
-                user.damage(user.world.damageSources.wither(),user.maxHealth)
-                users.remove(uuid)
-                state.removeFruit(uuid)
+                if(user.abilities.creativeMode) {
+                    user.kill()
+                } else {
+                    user.removeStatusEffect(StatusEffects.NAUSEA)
+                    user.damage(user.world.damageSources.wither(),user.maxHealth)
+                }
+                state.removeFruit(key)
             } else {
-                users.add(uuid)
-                state.setFruit(uuid,this)
+                state.setFruit(key,this)
             }
             NetworkManager.sendCanSwimS2C(
                 user,
