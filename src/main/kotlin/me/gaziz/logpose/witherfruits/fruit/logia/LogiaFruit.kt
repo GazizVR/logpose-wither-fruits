@@ -45,4 +45,6 @@ abstract class LogiaFruit(path: String): WitherFruit(
             PlayerManager.setDamageTypes(uuidStr,immuneDamageTypes)
         }
     }
+    abstract fun firstAbility(user: ServerPlayerEntity)
+    abstract fun secondAbility(user: ServerPlayerEntity)
 }

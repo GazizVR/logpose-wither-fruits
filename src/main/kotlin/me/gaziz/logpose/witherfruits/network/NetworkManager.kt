@@ -1,6 +1,7 @@
 package me.gaziz.logpose.witherfruits.network
 
 import me.gaziz.logpose.witherfruits.PersistFruitsState
+import me.gaziz.logpose.witherfruits.fruit.logia.LogiaFruit
 import me.gaziz.logpose.witherfruits.fruit.zoan.ZoanFruit
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
@@ -49,13 +50,21 @@ object NetworkManager {
                     .getPersistFruitsState(ctx.server())
                     .getFruits()[ctx.player().uuidAsString]
                     ?.let {
-                        when {
-                            it is ZoanFruit -> {
+                        when (it) {
+                            is ZoanFruit -> {
                                 when(payload.abilityNumber) {
                                     1 -> it.toggleTransform(ctx.player())
                                     2 -> it.toggleHybridForm(ctx.player())
                                 }
                             }
+
+                            is LogiaFruit -> {
+                                when(payload.abilityNumber) {
+                                    1 -> it.firstAbility(ctx.player())
+                                    2 -> it.secondAbility(ctx.player())
+                                }
+                            }
+
                             else -> {
                                 ctx.player().sendMessageToClient(
                                     Text.literal("Not implemented yet"),
