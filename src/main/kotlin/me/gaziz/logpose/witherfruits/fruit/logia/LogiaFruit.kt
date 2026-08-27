@@ -24,12 +24,17 @@ abstract class LogiaFruit(path: String): WitherFruit(
         ServerLifecycleEvents.SERVER_STARTED.register { server ->
             val state = PersistFruitsState().getPersistFruitsState(server)
             state.getFruits().forEach { (key, value) ->
-                if(value is FlameFruit) {
+                if(value == this) {
                     BuffManager.setEffects(key,buffEffects)
                     PlayerManager.setDamageTypes(key,immuneDamageTypes)
                 }
             }
         }
+    }
+
+    override fun onRemove(user: ServerPlayerEntity) {
+        BuffManager.removeEffects(user)
+        PlayerManager.removeDamageTypes(user.uuidAsString)
     }
 
     override fun onEat(user: ServerPlayerEntity){

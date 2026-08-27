@@ -59,6 +59,7 @@ abstract class WitherFruit(
         }
     }
     protected open fun onEat(user: ServerPlayerEntity) {}
+    protected abstract fun onRemove(user: ServerPlayerEntity)
     override fun finishUsing(
         stack: ItemStack,
         world: World,
@@ -75,6 +76,7 @@ abstract class WitherFruit(
             val fruit = state.getFruits()[key]
             if(fruit != null) {
                 stack.decrement(1)
+                fruit.onRemove(user)
                 if(user.abilities.creativeMode) {
                     user.kill()
                 } else {

@@ -39,6 +39,10 @@ abstract class ZoanFruit(
             PlayerManager.removeEntityType(player)
         }
     }
+    override fun onRemove(user: ServerPlayerEntity) {
+        removeModifiers(user)
+        currentForm.remove(user.uuidAsString)
+    }
     private fun toggleForm(
         form: Form,
         player: ServerPlayerEntity,
