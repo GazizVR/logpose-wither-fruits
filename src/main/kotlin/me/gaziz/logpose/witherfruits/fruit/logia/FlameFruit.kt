@@ -7,6 +7,7 @@ import net.minecraft.entity.projectile.FireballEntity
 import net.minecraft.entity.projectile.SmallFireballEntity
 import net.minecraft.registry.tag.DamageTypeTags
 import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.text.Text
 
 class FlameFruit: LogiaFruit("flame_fruit") {
     override val buffEffects = listOf(
@@ -19,11 +20,15 @@ class FlameFruit: LogiaFruit("flame_fruit") {
         DamageTypeTags.IS_LIGHTNING
     )
 
+    private val cooldownText = Text.literal("On cooldown")
     private val firstCooldown = mutableMapOf<String, Int>()
     override fun firstAbility(user: ServerPlayerEntity){
         val cooldown = firstCooldown[user.uuidAsString] ?: 0
         val currentTick = user.server.ticks
-        if(currentTick < cooldown) return
+        if(currentTick < cooldown) {
+            user.sendMessage(cooldownText,true)
+            return
+        }
         firstCooldown[user.uuidAsString] = currentTick + (SharedConstants.TICKS_PER_SECOND*3)
         val smallFireball = SmallFireballEntity(
             user.world,
@@ -38,7 +43,10 @@ class FlameFruit: LogiaFruit("flame_fruit") {
     override fun secondAbility(user: ServerPlayerEntity) {
         val cooldown = secondCooldown[user.uuidAsString] ?: 0
         val currentTick = user.server.ticks
-        if(currentTick < cooldown) return
+        if(currentTick < cooldown) {
+            user.sendMessage(cooldownText,true)
+            return
+        }
         secondCooldown[user.uuidAsString] = currentTick + (SharedConstants.TICKS_PER_SECOND*6)
         val fireball = FireballEntity(
             user.world,
