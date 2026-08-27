@@ -1,6 +1,7 @@
 package me.gaziz.logpose.witherfruits.fruit.logia
 
 import me.gaziz.logpose.witherfruits.modifier.createEffect
+import net.minecraft.SharedConstants
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.projectile.FireballEntity
 import net.minecraft.entity.projectile.SmallFireballEntity
@@ -15,9 +16,15 @@ class FlameFruit: LogiaFruit("flame_fruit") {
         DamageTypeTags.IS_EXPLOSION,
         DamageTypeTags.IS_PROJECTILE,
         DamageTypeTags.IS_FIRE,
-        DamageTypeTags.IS_PLAYER_ATTACK
+        DamageTypeTags.IS_LIGHTNING
     )
-    override fun firstAbility(user: ServerPlayerEntity) {
+
+    private val firstAbilityCooldown = mutableMapOf<String, Int>()
+    override fun firstAbility(user: ServerPlayerEntity){
+        val cooldown = firstAbilityCooldown[user.uuidAsString] ?: 0
+        val currentTick = user.server.ticks
+        if(currentTick < cooldown) return
+        firstAbilityCooldown[user.uuidAsString] = currentTick + (SharedConstants.TICKS_PER_SECOND *3)
         val smallFireball = SmallFireballEntity(
             user.world,
             user,
