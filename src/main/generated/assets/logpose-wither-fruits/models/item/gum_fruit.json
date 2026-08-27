@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "logpose-wither-fruits:item/rubber_fruit"
+    "layer0": "logpose-wither-fruits:item/gum_fruit"
   }
 }

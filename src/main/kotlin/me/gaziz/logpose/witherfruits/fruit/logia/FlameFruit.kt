@@ -13,7 +13,9 @@ class FlameFruit: LogiaFruit("flame_fruit") {
     )
     private val immuneDamageTypes = setOf(
         DamageTypeTags.IS_EXPLOSION,
-        DamageTypeTags.IS_FIRE
+        DamageTypeTags.IS_PROJECTILE,
+        DamageTypeTags.IS_FIRE,
+        DamageTypeTags.IS_PLAYER_ATTACK
     )
     init {
         users.forEach { uuidStr ->

@@ -38,7 +38,7 @@ class EnglishLangProvider(
         )
 
         translationBuilder.add(
-            ModFruits.rubberFruit.id.toTranslationKey("item"),
+            ModFruits.gumFruit.id.toTranslationKey("item"),
             "Gum-Gum Fruit"
         )
         translationBuilder.add(

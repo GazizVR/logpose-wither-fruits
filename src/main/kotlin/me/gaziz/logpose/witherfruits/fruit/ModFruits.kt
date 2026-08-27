@@ -2,7 +2,7 @@ package me.gaziz.logpose.witherfruits.fruit
 
 import me.gaziz.logpose.witherfruits.Initializer
 import me.gaziz.logpose.witherfruits.fruit.logia.FlameFruit
-import me.gaziz.logpose.witherfruits.fruit.paramecia.ParameciaFruit
+import me.gaziz.logpose.witherfruits.fruit.paramecia.GumFruit
 import me.gaziz.logpose.witherfruits.fruit.zoan.CatLeopardFruit
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
@@ -21,7 +21,7 @@ object ModFruits {
         Initializer.MOD_NAME_ID
     )
     private val itemGroup = FabricItemGroup.builder()
-        .icon { ItemStack(rubberFruit) }
+        .icon { ItemStack(gumFruit) }
         .displayName(Text.translatable(Initializer.MOD_NAME_ID.toTranslationKey()))
         .build()
     private fun register(
@@ -46,7 +46,7 @@ object ModFruits {
     val logiaTooltipKey: String = tooltipKey("type_logia")
     val zoanTooltipKey: String = tooltipKey("type_zoan")
 
-    val rubberFruit = ParameciaFruit("rubber_fruit")
+    val gumFruit = GumFruit()
     val catLeopardFruit = CatLeopardFruit()
     val flameFruit = FlameFruit()
 
@@ -56,7 +56,7 @@ object ModFruits {
             itemGroupKey,
             itemGroup
         )
-        register(rubberFruit.id, rubberFruit)
+        register(gumFruit.id, gumFruit)
         register(catLeopardFruit.id, catLeopardFruit)
         register(flameFruit.id, flameFruit)
     }
