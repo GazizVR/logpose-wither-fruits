@@ -3,12 +3,12 @@
 	"id": "logpose-wither-fruits",
 	"version": "${version}",
 	"name": "LogPose: Wither Fruits",
-	"description": "Wither Fruits mod",
+	"description": "Adds Devil Fruit-inspired wither fruits that grant unique powers, transformations, and abilities — at the cost of your ability to swim.",
 	"authors": [ "gaziz" ],
 	"contact": {
 		"sources": "https://github.com/GazizVR/logpose-wither-fruits"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/logpose-wither-fruits/icon.png",
 	"environment": "*",
 	"entrypoints": {
